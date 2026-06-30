@@ -13,7 +13,7 @@ website visitors, in line with Regulation (EU) 2016/679 (GDPR).
 
 - **Name:** MentesIT Kft. (trading as FreeIT)
 - **Registered seat:** 8640 Fonyód, Erdősor utca 14., Hungary
-- **Company registration number:** <!-- TODO: from company papers (14-09-……) -->[registration number]
+- **Company registration number:** 14-09-318034
 - **Tax number:** 28998596-2-14
 - **Email:** info@mentesit.eu
 

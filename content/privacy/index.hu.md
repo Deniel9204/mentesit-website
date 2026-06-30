@@ -15,7 +15,7 @@ a Tanács (EU) 2016/679 rendeletével (GDPR).
 
 - **Név:** MentesIT Kft.
 - **Székhely:** 8640 Fonyód, Erdősor utca 14.
-- **Cégjegyzékszám:** <!-- TODO: cégpapírból (14-09-……) -->[cégjegyzékszám]
+- **Cégjegyzékszám:** 14-09-318034
 - **Adószám:** 28998596-2-14
 - **E-mail:** info@mentesit.eu
 
