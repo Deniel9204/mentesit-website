@@ -205,6 +205,7 @@ func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	// Honeypot: a real user never fills this. Pretend success, send nothing.
 	if strings.TrimSpace(r.PostFormValue("company_url")) != "" {
+		log.Printf("honeypot drop from %s", h.clientIP(r))
 		respond(true, http.StatusOK, "ok")
 		return
 	}
@@ -258,6 +259,10 @@ func (h handler) send(replyTo, subject, body string) error {
 
 func main() {
 	cfg := loadConfig()
+	// Log the effective routing (never the password) so a misdirected MAIL_TO or
+	// wrong SMTP relay is visible in the container logs without guesswork.
+	log.Printf("contact config: smtp=%s:%s auth=%t mail_from=%s mail_to=%s path=%s",
+		cfg.smtpHost, cfg.smtpPort, cfg.smtpUser != "", cfg.mailFrom, cfg.mailTo, cfg.path)
 	h := handler{cfg: cfg, rl: newRateLimiter(5, 10*time.Minute), proxies: parseProxies(cfg.trustedProxies)}
 
 	mux := http.NewServeMux()

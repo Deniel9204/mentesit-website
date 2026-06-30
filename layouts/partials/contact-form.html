@@ -7,9 +7,11 @@
       data-error="{{ i18n "form_error" }}">
   <input type="hidden" name="lang" value="{{ site.Language.Lang }}">
 
-  {{/* Honeypot — hidden from people, tempting for bots. */}}
+  {{/* Honeypot — hidden from people, tempting for bots. A checkbox (not a text
+       field) so password managers / browser autofill never populate it and drop
+       a real submission; bots tick everything. */}}
   <div class="hp" aria-hidden="true">
-    <label>{{ i18n "form_hp" }}<input type="text" name="company_url" tabindex="-1" autocomplete="off"></label>
+    <label>{{ i18n "form_hp" }}<input type="checkbox" name="company_url" tabindex="-1" autocomplete="off"></label>
   </div>
 
   <div class="field">
