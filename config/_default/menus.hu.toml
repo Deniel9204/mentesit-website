@@ -55,3 +55,9 @@
   name = "Kapcsolat"
   pageRef = "/contact"
   weight = 40
+
+[[footer]]
+  identifier = "privacy"
+  name = "Adatkezelés"
+  pageRef = "/privacy"
+  weight = 50

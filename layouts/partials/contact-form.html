@@ -31,6 +31,14 @@
     <textarea id="cf-message" name="message" rows="6" required maxlength="5000"></textarea>
   </div>
 
+  {{/* GDPR consent — required; the server also enforces it. */}}
+  <div class="field field-consent">
+    <label class="consent">
+      <input type="checkbox" name="consent" value="yes" required>
+      <span>{{ i18n "form_consent_pre" }}{{ with site.GetPage "/privacy" }}<a href="{{ .RelPermalink }}">{{ i18n "form_consent_link" }}</a>{{ end }}{{ i18n "form_consent_post" }}</span>
+    </label>
+  </div>
+
   <button type="submit" class="btn btn-accent">{{ i18n "form_submit" }}</button>
   <p class="form-status" role="status" aria-live="polite" hidden></p>
   <p class="captcha-note">{{ i18n "form_captcha_note" }}</p>

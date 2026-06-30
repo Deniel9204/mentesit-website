@@ -98,13 +98,27 @@ func TestAltchaRejections(t *testing.T) {
 	})
 }
 
+// GDPR consent is mandatory: no consent -> 400; with consent the submission
+// reaches send (-> 502, SMTP unreachable). Captcha is disabled here to isolate.
+func TestContactRequiresConsent(t *testing.T) {
+	h := testHandler()
+	base := map[string]string{"name": "Anna", "email": "anna@example.com", "message": "Szia"}
+	if code := serve(h, formReq(base)); code != http.StatusBadRequest {
+		t.Fatalf("missing consent: got %d, want 400", code)
+	}
+	base["consent"] = "yes"
+	if code := serve(h, formReq(base)); code != http.StatusBadGateway {
+		t.Fatalf("with consent: got %d, want 502 (reached send)", code)
+	}
+}
+
 // The endpoint must reject a submission with no/invalid captcha and accept a
 // valid one (which then reaches send -> 502 with SMTP unreachable).
 func TestContactRequiresCaptcha(t *testing.T) {
 	h := testHandler()
 	h.captcha = newAltcha([]byte("key-1"), 5000, time.Minute)
 
-	base := map[string]string{"name": "Anna", "email": "anna@example.com", "message": "Szia", "lang": "hu"}
+	base := map[string]string{"name": "Anna", "email": "anna@example.com", "message": "Szia", "lang": "hu", "consent": "yes"}
 	if code := serve(h, formReq(base)); code != http.StatusBadRequest {
 		t.Fatalf("missing captcha: got %d, want 400", code)
 	}
@@ -177,7 +191,7 @@ func serve(h handler, r *http.Request) int {
 // Both content types the front-end can produce must parse. A 400 here means the
 // fields were read as empty (the multipart/ParseForm bug).
 func TestContactParsesUrlencodedAndMultipart(t *testing.T) {
-	form := map[string]string{"name": "Anna", "email": "anna@example.com", "message": "Szia", "lang": "hu"}
+	form := map[string]string{"name": "Anna", "email": "anna@example.com", "message": "Szia", "lang": "hu", "consent": "yes"}
 
 	t.Run("urlencoded", func(t *testing.T) {
 		vals := url.Values{}

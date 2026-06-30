@@ -1,0 +1,10 @@
+{{ define "main" }}
+<article class="panel legal-page">
+  <header class="panel-head">
+    <p class="panel-file" aria-hidden="true">{{ .RelPermalink }}</p>
+    <h1>{{ .Title }}</h1>
+  </header>
+
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+</article>
+{{ end }}

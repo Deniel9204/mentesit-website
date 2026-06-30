@@ -390,6 +390,13 @@ func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	// GDPR consent is mandatory (the form marks the checkbox required; we also
+	// enforce it server-side and record it in the relayed message).
+	if strings.TrimSpace(r.PostFormValue("consent")) == "" {
+		respond(false, http.StatusBadRequest, "consent required")
+		return
+	}
+
 	name := stripCRLF(r.PostFormValue("name"))
 	email := stripCRLF(r.PostFormValue("email"))
 	lang := stripCRLF(r.PostFormValue("lang"))
@@ -403,7 +410,8 @@ func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	subject := fmt.Sprintf("[mentesit.eu/%s] Új üzenet: %s", lang, name)
-	body := fmt.Sprintf("Név:   %s\nEmail: %s\nNyelv: %s\n\n%s\n", name, email, lang, message)
+	body := fmt.Sprintf("Név:   %s\nEmail: %s\nNyelv: %s\n\n%s\n\n— Adatkezelési hozzájárulás megadva (GDPR 6. cikk (1) a)). —\n",
+		name, email, lang, message)
 
 	if err := h.send(email, subject, body); err != nil {
 		log.Printf("send error from %s: %v", h.clientIP(r), err)

@@ -90,3 +90,12 @@ other = "Spam protection: a brief automatic check runs in the background — no 
 
 [form_captcha_verifying]
 other = "Verifying…"
+
+[form_consent_pre]
+other = "I agree to the "
+
+[form_consent_link]
+other = "Privacy Policy"
+
+[form_consent_post]
+other = "."

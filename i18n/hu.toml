@@ -90,3 +90,12 @@ other = "Spamvédelem: rövid, automatikus ellenőrzés fut a háttérben — ni
 
 [form_captcha_verifying]
 other = "Ellenőrzés folyamatban…"
+
+[form_consent_pre]
+other = "Elfogadom az "
+
+[form_consent_link]
+other = "adatkezelési tájékoztatót"
+
+[form_consent_post]
+other = "."

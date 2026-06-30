@@ -37,6 +37,26 @@
 // ALTCHA proof-of-work captcha note (the widget itself is invisible).
 .captcha-note { margin: 0; font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.5; color: var(--muted); }
 
+// GDPR consent — checkbox + inline label that links to the privacy policy.
+.field-consent { margin-top: calc(-1 * var(--space-1, 0.5rem)); }
+.consent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.6rem;
+  align-items: start;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text);
+  cursor: pointer;
+}
+.consent input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.15rem;
+  accent-color: var(--accent);
+}
+.consent a { color: var(--accent); }
+
 .contact-form button { justify-self: start; }
 .form-status { margin: 0; font-family: var(--font-mono); font-size: 0.9rem; }
 .form-status.is-ok { color: var(--accent); }
