@@ -3,9 +3,13 @@
        rate-limiting guard against spam. */ -}}
 <form class="contact-form" action="{{ site.Params.formEndpoint }}" method="post"
       data-contact-form
+      data-altcha-url="{{ site.Params.formEndpoint }}/challenge"
       data-success="{{ .Params.successMessage }}"
-      data-error="{{ i18n "form_error" }}">
+      data-error="{{ i18n "form_error" }}"
+      data-verifying="{{ i18n "form_captcha_verifying" }}">
   <input type="hidden" name="lang" value="{{ site.Language.Lang }}">
+  {{/* ALTCHA proof-of-work captcha solution — filled by JS before submit. */}}
+  <input type="hidden" name="altcha">
 
   {{/* Honeypot — hidden from people, tempting for bots. A checkbox (not a text
        field) so password managers / browser autofill never populate it and drop
@@ -29,4 +33,5 @@
 
   <button type="submit" class="btn btn-accent">{{ i18n "form_submit" }}</button>
   <p class="form-status" role="status" aria-live="polite" hidden></p>
+  <p class="captcha-note">{{ i18n "form_captcha_note" }}</p>
 </form>

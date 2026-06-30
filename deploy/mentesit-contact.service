@@ -15,7 +15,8 @@ Environment=SMTP_PORT=25
 Environment=MAIL_FROM=no-reply@mentesit.eu
 Environment=MAIL_TO=info@mentesit.eu
 Environment=SUCCESS_URL=https://mentesit.eu/kapcsolat/
-# Secrets (SMTP_USER / SMTP_PASS) belong in an EnvironmentFile, not the unit:
+# Secrets (SMTP_USER / SMTP_PASS) and the ALTCHA_HMAC_KEY belong in an
+# EnvironmentFile, not the unit (generate the key with: openssl rand -hex 32):
 # EnvironmentFile=-/etc/mentesit/contact.env
 
 # Hardening

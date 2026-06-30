@@ -84,3 +84,9 @@ other = "Something went wrong. Please try again or email us."
 
 [form_hp]
 other = "Leave this field empty"
+
+[form_captcha_note]
+other = "Spam protection: a brief automatic check runs in the background — no tracking, no third party."
+
+[form_captcha_verifying]
+other = "Verifying…"

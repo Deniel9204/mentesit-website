@@ -31,6 +31,9 @@ services:
       # Only the web container (this network) may set X-Forwarded-For; the real
       # client IP is then read from it for per-IP rate limiting.
       TRUSTED_PROXIES: "${TRUSTED_PROXIES:-172.28.0.0/16}"
+      # Signs ALTCHA captcha challenges. Empty -> ephemeral key per restart
+      # (fine for one replica). Set it in .env for stable/multi-replica deploys.
+      ALTCHA_HMAC_KEY: "${ALTCHA_HMAC_KEY:-}"
     expose:
       - "8081"
 

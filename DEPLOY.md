@@ -88,6 +88,7 @@ SMTP_PASS=...
 MAIL_FROM=no-reply@mentesit.eu      # must pass SPF/DKIM
 MAIL_TO=info@mentesit.eu
 SUCCESS_URL=https://mentesit.eu/kapcsolat/
+ALTCHA_HMAC_KEY=                    # openssl rand -hex 32 (else ephemeral)
 ```
 
 The `web` container serves on `:80` (mapped to `WEB_PORT`) and proxies

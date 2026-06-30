@@ -34,6 +34,9 @@
 // Honeypot — off-screen, never display:none (bots skip hidden inputs).
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
+// ALTCHA proof-of-work captcha note (the widget itself is invisible).
+.captcha-note { margin: 0; font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.5; color: var(--muted); }
+
 .contact-form button { justify-self: start; }
 .form-status { margin: 0; font-family: var(--font-mono); font-size: 0.9rem; }
 .form-status.is-ok { color: var(--accent); }

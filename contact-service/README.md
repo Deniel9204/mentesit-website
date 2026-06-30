@@ -26,6 +26,7 @@ go build -o /opt/mentesit/contact .
 | `MAIL_TO`      | `info@mentesit.eu`               | where messages are delivered |
 | `SUCCESS_URL`  | `https://mentesit.eu/kapcsolat/` | redirect target for no-JS POSTs |
 | `TRUSTED_PROXIES` | `127.0.0.0/8,::1/128`         | CIDRs/IPs whose `X-Forwarded-For` is trusted (your reverse proxy). Compose sets the web→contact network. |
+| `ALTCHA_HMAC_KEY` | (random per start)               | Secret signing the ALTCHA captcha challenges (`openssl rand -hex 32`). Set it for stable/multi-replica deploys. |
 
 ## Deploy (systemd)
 
@@ -46,6 +47,11 @@ nginx proxies `/api/contact` to this service — see `../deploy/nginx.conf.sampl
   `X-Forwarded-For` is only honored from a `TRUSTED_PROXIES` peer (right-most
   non-proxy entry), so a client cannot spoof the header to evade the limit.
 - CR/LF stripped from header-bound fields → no mail-header injection.
+- **ALTCHA captcha** (self-hosted, no third party): `GET /api/contact/challenge`
+  issues a signed proof-of-work challenge; the browser solves it and posts the
+  result in the `altcha` field. The server re-checks the solution + its HMAC
+  signature, the embedded expiry, and single-use (replay) — invalid/missing →
+  `400`. Requires JS; no-JS visitors use the email address on the contact page.
 - `Accept: application/json` (the site's `fetch`) → JSON `{ok, message}`;
   otherwise a `303` redirect to `SUCCESS_URL`.
 - Request body capped at 64 KB; `GET /healthz` → `ok`.

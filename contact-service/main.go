@@ -7,14 +7,21 @@
 package main
 
 import (
+	"crypto/hmac"
+	"crypto/rand"
+	"crypto/sha256"
 	"encoding/base64"
+	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
+	"math/big"
 	"net"
 	"net/http"
 	"net/smtp"
 	"os"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -160,10 +167,168 @@ func mimeEncode(s string) string {
 	return "=?UTF-8?B?" + base64.StdEncoding.EncodeToString([]byte(s)) + "?="
 }
 
+// --- ALTCHA: self-hosted, privacy-friendly proof-of-work captcha ----------
+// Spec-compatible (github.com/altcha-org). We issue a signed challenge, the
+// browser brute-forces a number whose SHA-256 matches, and we verify the
+// solution + our HMAC signature. No third party, no tracking, stdlib only.
+
+type altcha struct {
+	key       []byte        // HMAC key — proves a challenge is ours
+	maxNumber int           // proof-of-work difficulty ceiling
+	ttl       time.Duration // how long a challenge stays valid
+
+	mu   sync.Mutex           // guards seen
+	seen map[string]time.Time // signature -> expiry, single-use replay guard
+}
+
+func newAltcha(key []byte, maxNumber int, ttl time.Duration) *altcha {
+	return &altcha{key: key, maxNumber: maxNumber, ttl: ttl, seen: map[string]time.Time{}}
+}
+
+type altchaChallenge struct {
+	Algorithm string `json:"algorithm"`
+	Challenge string `json:"challenge"`
+	MaxNumber int    `json:"maxnumber"`
+	Salt      string `json:"salt"`
+	Signature string `json:"signature"`
+}
+
+type altchaSolution struct {
+	Algorithm string `json:"algorithm"`
+	Challenge string `json:"challenge"`
+	Number    int    `json:"number"`
+	Salt      string `json:"salt"`
+	Signature string `json:"signature"`
+}
+
+func sha256hex(s string) string {
+	sum := sha256.Sum256([]byte(s))
+	return hex.EncodeToString(sum[:])
+}
+
+func (a *altcha) sign(challenge string) string {
+	m := hmac.New(sha256.New, a.key)
+	m.Write([]byte(challenge))
+	return hex.EncodeToString(m.Sum(nil))
+}
+
+// create issues a fresh signed challenge with an embedded expiry.
+func (a *altcha) create() (altchaChallenge, error) {
+	saltBytes := make([]byte, 12)
+	if _, err := rand.Read(saltBytes); err != nil {
+		return altchaChallenge{}, err
+	}
+	nBig, err := rand.Int(rand.Reader, big.NewInt(int64(a.maxNumber)))
+	if err != nil {
+		return altchaChallenge{}, err
+	}
+	expires := time.Now().Add(a.ttl).Unix()
+	salt := fmt.Sprintf("%s?expires=%d", hex.EncodeToString(saltBytes), expires)
+	challenge := sha256hex(salt + strconv.FormatInt(nBig.Int64(), 10))
+	return altchaChallenge{
+		Algorithm: "SHA-256",
+		Challenge: challenge,
+		MaxNumber: a.maxNumber,
+		Salt:      salt,
+		Signature: a.sign(challenge),
+	}, nil
+}
+
+// verify checks a base64-encoded ALTCHA solution payload.
+func (a *altcha) verify(payloadB64 string) error {
+	if payloadB64 == "" {
+		return errors.New("missing")
+	}
+	raw, err := base64.StdEncoding.DecodeString(payloadB64)
+	if err != nil {
+		return errors.New("not base64")
+	}
+	var s altchaSolution
+	if err := json.Unmarshal(raw, &s); err != nil {
+		return errors.New("not json")
+	}
+	if s.Algorithm != "SHA-256" {
+		return errors.New("bad algorithm")
+	}
+	if s.Number < 0 || s.Number > a.maxNumber {
+		return errors.New("number out of range")
+	}
+	// The number must actually solve the challenge...
+	if !hmac.Equal([]byte(sha256hex(s.Salt+strconv.Itoa(s.Number))), []byte(s.Challenge)) {
+		return errors.New("wrong solution")
+	}
+	// ...and the signature proves WE issued that challenge (no forgery).
+	if !hmac.Equal([]byte(a.sign(s.Challenge)), []byte(s.Signature)) {
+		return errors.New("bad signature")
+	}
+	exp, err := saltExpiry(s.Salt)
+	if err != nil {
+		return errors.New("bad salt")
+	}
+	if time.Now().After(exp) {
+		return errors.New("expired")
+	}
+	if !a.useOnce(s.Signature, exp) {
+		return errors.New("replay")
+	}
+	return nil
+}
+
+func saltExpiry(salt string) (time.Time, error) {
+	i := strings.Index(salt, "?expires=")
+	if i < 0 {
+		return time.Time{}, errors.New("no expires")
+	}
+	q := salt[i+len("?expires="):]
+	if amp := strings.IndexByte(q, '&'); amp >= 0 {
+		q = q[:amp]
+	}
+	sec, err := strconv.ParseInt(q, 10, 64)
+	if err != nil {
+		return time.Time{}, err
+	}
+	return time.Unix(sec, 0), nil
+}
+
+// useOnce records a signature so a solved challenge cannot be replayed; it also
+// opportunistically evicts expired entries so the map cannot grow unbounded.
+func (a *altcha) useOnce(sig string, exp time.Time) bool {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	now := time.Now()
+	for k, t := range a.seen {
+		if now.After(t) {
+			delete(a.seen, k)
+		}
+	}
+	if _, used := a.seen[sig]; used {
+		return false
+	}
+	a.seen[sig] = exp
+	return true
+}
+
 type handler struct {
 	cfg     config
 	rl      *rateLimiter
 	proxies proxySet
+	captcha *altcha // nil disables captcha enforcement
+}
+
+// challengeHandler serves a fresh ALTCHA challenge to the browser widget/solver.
+func (h handler) challengeHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	c, err := h.captcha.create()
+	if err != nil {
+		http.Error(w, "challenge error", http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Header().Set("Cache-Control", "no-store")
+	_ = json.NewEncoder(w).Encode(c)
 }
 
 func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -215,6 +380,16 @@ func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// ALTCHA proof-of-work captcha (requires JS; no-JS visitors use the email
+	// address shown on the contact page).
+	if h.captcha != nil {
+		if err := h.captcha.verify(r.PostFormValue("altcha")); err != nil {
+			log.Printf("captcha fail from %s: %v", h.clientIP(r), err)
+			respond(false, http.StatusBadRequest, "captcha failed")
+			return
+		}
+	}
+
 	name := stripCRLF(r.PostFormValue("name"))
 	email := stripCRLF(r.PostFormValue("email"))
 	lang := stripCRLF(r.PostFormValue("lang"))
@@ -263,10 +438,26 @@ func main() {
 	// wrong SMTP relay is visible in the container logs without guesswork.
 	log.Printf("contact config: smtp=%s:%s auth=%t mail_from=%s mail_to=%s path=%s",
 		cfg.smtpHost, cfg.smtpPort, cfg.smtpUser != "", cfg.mailFrom, cfg.mailTo, cfg.path)
-	h := handler{cfg: cfg, rl: newRateLimiter(5, 10*time.Minute), proxies: parseProxies(cfg.trustedProxies)}
+
+	// ALTCHA signing key: stable across restarts/replicas when set, else random.
+	key := []byte(os.Getenv("ALTCHA_HMAC_KEY"))
+	if len(key) == 0 {
+		key = make([]byte, 32)
+		if _, err := rand.Read(key); err != nil {
+			log.Fatalf("altcha key: %v", err)
+		}
+		log.Printf("ALTCHA_HMAC_KEY not set — using an ephemeral key (set it for stable/multi-replica deploys)")
+	}
+	h := handler{
+		cfg:     cfg,
+		rl:      newRateLimiter(5, 10*time.Minute),
+		proxies: parseProxies(cfg.trustedProxies),
+		captcha: newAltcha(key, 20000, 5*time.Minute),
+	}
 
 	mux := http.NewServeMux()
 	mux.Handle(cfg.path, h)
+	mux.HandleFunc(cfg.path+"/challenge", h.challengeHandler)
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, _ *http.Request) {
 		fmt.Fprintln(w, "ok")
 	})

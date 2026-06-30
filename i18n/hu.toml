@@ -84,3 +84,9 @@ other = "Hiba történt. Kérlek, próbáld újra, vagy írj e-mailt."
 
 [form_hp]
 other = "Ezt a mezőt hagyd üresen"
+
+[form_captcha_note]
+other = "Spamvédelem: rövid, automatikus ellenőrzés fut a háttérben — nincs nyomkövetés, nincs külső szolgáltató."
+
+[form_captcha_verifying]
+other = "Ellenőrzés folyamatban…"

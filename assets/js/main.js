@@ -109,13 +109,16 @@ safe(function () {
   });
 });
 
-// 4) Contact form — fetch submit with inline status. Falls back to a native
-//    POST (server redirect) when JS is unavailable.
+// 4) Contact form — solve the ALTCHA proof-of-work, then fetch submit with
+//    inline status. Self-hosted captcha, no third party. No-JS visitors use the
+//    email address shown alongside the form.
 safe(function () {
   var form = document.querySelector("[data-contact-form]");
   if (!form) return;
   var status = form.querySelector(".form-status");
   var btn = form.querySelector("button[type=submit]");
+  var altchaInput = form.querySelector("input[name=altcha]");
+  var challengeURL = form.getAttribute("data-altcha-url");
 
   function show(msg, ok) {
     if (!status) return;
@@ -123,25 +126,65 @@ safe(function () {
     status.className = "form-status " + (ok ? "is-ok" : "is-err");
     status.hidden = false;
   }
+  function note(msg) {
+    if (!status || !msg) return;
+    status.textContent = msg;
+    status.className = "form-status";
+    status.hidden = false;
+  }
+  function toHex(buf) {
+    var b = new Uint8Array(buf), s = "";
+    for (var i = 0; i < b.length; i++) s += b[i].toString(16).padStart(2, "0");
+    return s;
+  }
+
+  // Fetch a fresh challenge and brute-force the number whose SHA-256 matches.
+  // Returns the base64 ALTCHA payload, or null if captcha can't run (the server
+  // then rejects, and the user falls back to email).
+  function solveCaptcha() {
+    if (!altchaInput || !challengeURL || !(window.crypto && crypto.subtle)) {
+      return Promise.resolve(null);
+    }
+    return fetch(challengeURL, { headers: { "Accept": "application/json" } })
+      .then(function (r) { return r.json(); })
+      .then(async function (c) {
+        var enc = new TextEncoder();
+        for (var n = 0; n <= c.maxnumber; n++) {
+          var buf = await crypto.subtle.digest("SHA-256", enc.encode(c.salt + n));
+          if (toHex(buf) === c.challenge) {
+            return btoa(JSON.stringify({
+              algorithm: c.algorithm, challenge: c.challenge,
+              number: n, salt: c.salt, signature: c.signature
+            }));
+          }
+        }
+        return null;
+      });
+  }
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     if (status) { status.hidden = true; status.className = "form-status"; }
     if (btn) btn.disabled = true;
-    fetch(form.action, {
-      method: "POST",
-      headers: { "Accept": "application/json", "X-Requested-With": "fetch" },
-      // URLSearchParams -> application/x-www-form-urlencoded (no file fields),
-      // which the endpoint's ParseForm reads directly.
-      body: new URLSearchParams(new FormData(form))
-    })
+    note(form.dataset.verifying);
+    solveCaptcha()
+      .then(function (payload) {
+        if (altchaInput) altchaInput.value = payload || "";
+        return fetch(form.action, {
+          method: "POST",
+          headers: { "Accept": "application/json", "X-Requested-With": "fetch" },
+          // URLSearchParams -> application/x-www-form-urlencoded (no file fields).
+          body: new URLSearchParams(new FormData(form))
+        });
+      })
       .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
       .then(function (data) {
         if (data && data.ok) { form.reset(); show(form.dataset.success || "OK", true); }
         else { show(form.dataset.error || "Error", false); }
       })
       .catch(function () { show(form.dataset.error || "Error", false); })
-      .then(function () { if (btn) btn.disabled = false; });
+      // Clear the one-time solution so each attempt solves a fresh challenge.
+      .then(function () { if (btn) btn.disabled = false; if (altchaInput) altchaInput.value = ""; });
   });
 });
 

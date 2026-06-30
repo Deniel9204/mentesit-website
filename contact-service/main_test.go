@@ -2,6 +2,8 @@ package main
 
 import (
 	"bytes"
+	"encoding/base64"
+	"encoding/json"
 	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
@@ -11,6 +13,112 @@ import (
 	"testing"
 	"time"
 )
+
+// solveAltcha brute-forces a challenge the way the browser solver does.
+func solveAltcha(c altchaChallenge) string {
+	for n := 0; n <= c.MaxNumber; n++ {
+		if sha256hex(c.Salt+strconv.Itoa(n)) == c.Challenge {
+			b, _ := json.Marshal(altchaSolution{
+				Algorithm: c.Algorithm, Challenge: c.Challenge,
+				Number: n, Salt: c.Salt, Signature: c.Signature,
+			})
+			return base64.StdEncoding.EncodeToString(b)
+		}
+	}
+	return ""
+}
+
+func formReq(fields map[string]string) *http.Request {
+	vals := url.Values{}
+	for k, v := range fields {
+		vals.Set(k, v)
+	}
+	r := httptest.NewRequest(http.MethodPost, "/api/contact", strings.NewReader(vals.Encode()))
+	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Accept", "application/json")
+	return r
+}
+
+func TestAltchaRoundTrip(t *testing.T) {
+	a := newAltcha([]byte("key-1"), 5000, time.Minute)
+	c, err := a.create()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := a.verify(solveAltcha(c)); err != nil {
+		t.Fatalf("valid solution rejected: %v", err)
+	}
+}
+
+func TestAltchaRejections(t *testing.T) {
+	a := newAltcha([]byte("key-1"), 5000, time.Minute)
+
+	t.Run("empty", func(t *testing.T) {
+		if a.verify("") == nil {
+			t.Fatal("empty accepted")
+		}
+	})
+
+	t.Run("forged signature (wrong key)", func(t *testing.T) {
+		other := newAltcha([]byte("attacker-key"), 5000, time.Minute)
+		c, _ := other.create() // signed by a key we don't trust
+		if err := a.verify(solveAltcha(c)); err == nil {
+			t.Fatal("forged challenge accepted")
+		}
+	})
+
+	t.Run("wrong number", func(t *testing.T) {
+		c, _ := a.create()
+		b, _ := json.Marshal(altchaSolution{
+			Algorithm: c.Algorithm, Challenge: c.Challenge,
+			Number: c.MaxNumber, Salt: c.Salt, Signature: c.Signature, // almost certainly not the answer
+		})
+		if a.verify(base64.StdEncoding.EncodeToString(b)) == nil {
+			t.Fatal("wrong number accepted")
+		}
+	})
+
+	t.Run("expired", func(t *testing.T) {
+		past := newAltcha([]byte("key-1"), 5000, -time.Minute) // expires in the past
+		c, _ := past.create()
+		if err := past.verify(solveAltcha(c)); err == nil {
+			t.Fatal("expired challenge accepted")
+		}
+	})
+
+	t.Run("replay", func(t *testing.T) {
+		c, _ := a.create()
+		sol := solveAltcha(c)
+		if err := a.verify(sol); err != nil {
+			t.Fatalf("first use failed: %v", err)
+		}
+		if a.verify(sol) == nil {
+			t.Fatal("replay accepted")
+		}
+	})
+}
+
+// The endpoint must reject a submission with no/invalid captcha and accept a
+// valid one (which then reaches send -> 502 with SMTP unreachable).
+func TestContactRequiresCaptcha(t *testing.T) {
+	h := testHandler()
+	h.captcha = newAltcha([]byte("key-1"), 5000, time.Minute)
+
+	base := map[string]string{"name": "Anna", "email": "anna@example.com", "message": "Szia", "lang": "hu"}
+	if code := serve(h, formReq(base)); code != http.StatusBadRequest {
+		t.Fatalf("missing captcha: got %d, want 400", code)
+	}
+
+	c, _ := h.captcha.create()
+	withCaptcha := map[string]string{}
+	for k, v := range base {
+		withCaptcha[k] = v
+	}
+	withCaptcha["altcha"] = solveAltcha(c)
+	if code := serve(h, formReq(withCaptcha)); code != http.StatusBadGateway {
+		t.Fatalf("valid captcha: got %d, want 502 (reached send)", code)
+	}
+}
 
 func newH(trusted string) handler {
 	return handler{proxies: parseProxies(trusted)}
