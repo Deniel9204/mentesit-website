@@ -1,0 +1,115 @@
+// Command palette, its triggers, and scroll reveals.
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+// Triggers ------------------------------------------------------------------
+.cmdk-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--surface);
+  color: var(--muted);
+  border: var(--hairline);
+  border-radius: 8px;
+  padding: 0.3rem 0.55rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 140ms ease, border-color 140ms ease;
+}
+.cmdk-trigger:hover { color: var(--text); border-color: var(--accent); }
+.cmdk-trigger-key {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  border: var(--hairline);
+  border-radius: 4px;
+  padding: 0 0.3rem;
+}
+.status-search {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: inherit;
+  padding: 0;
+}
+.status-search:hover { color: var(--accent); }
+
+// Dialog --------------------------------------------------------------------
+.cmdk {
+  margin: 0; padding: 0; border: 0;
+  width: 100%; max-width: 100%; height: 100%; max-height: 100%;
+  background: transparent;
+  color: var(--text);
+}
+.cmdk::backdrop { background: rgba(5, 7, 10, 0.62); backdrop-filter: blur(6px); }
+.cmdk-panel {
+  position: absolute;
+  top: 12vh; left: 50%;
+  transform: translateX(-50%);
+  width: min(560px, 92vw);
+  background: var(--surface);
+  border: var(--hairline);
+  border-radius: 14px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+.cmdk-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem 1.1rem;
+  background: transparent;
+  border: 0;
+  border-bottom: var(--hairline);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+}
+.cmdk-input::placeholder { color: var(--muted); }
+.cmdk-input:focus { outline: none; }
+.cmdk-list { list-style: none; margin: 0; padding: 0.4rem; max-height: 52vh; overflow-y: auto; }
+.cmdk-opt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.cmdk-opt[hidden] { display: none; }
+.cmdk-opt.is-active { background: var(--surface-2); }
+.cmdk-opt.is-active .cmdk-opt-label { color: var(--accent); }
+.cmdk-opt-kind { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); }
+.cmdk-empty { padding: 1rem; margin: 0; color: var(--muted); font-family: var(--font-mono); font-size: 0.9rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .cmdk[open] .cmdk-panel { animation: cmdk-in 130ms ease; }
+}
+@keyframes cmdk-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+// Scroll reveals ------------------------------------------------------------
+// Only hide-then-reveal when JS is present AND motion is allowed, so no-JS and
+// reduced-motion users always see content immediately.
+@media (prefers-reduced-motion: no-preference) {
+  .js .site-main > section,
+  .js .site-main > article {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .js .site-main > section.is-visible,
+  .js .site-main > article.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}

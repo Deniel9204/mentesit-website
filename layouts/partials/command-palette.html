@@ -1,0 +1,32 @@
+{{- /* Command palette — built from the SAME site menu (DRY). Progressive
+       enhancement: the dialog is inert without JS; the header nav + footer are
+       the real navigation. */ -}}
+{{- $langNames := dict "hu" "Magyar" "en" "English" -}}
+{{- $items := slice -}}
+{{- range site.Menus.main -}}
+  {{- $items = $items | append (dict "label" .Name "href" .URL "kind" (i18n "cmdk_kind_page")) -}}
+{{- end -}}
+{{- with site.GetPage "/services" -}}
+  {{- range .Pages.ByWeight -}}
+    {{- $items = $items | append (dict "label" .Title "href" .RelPermalink "kind" (i18n "cmdk_kind_service")) -}}
+  {{- end -}}
+{{- end -}}
+{{- range .Translations -}}
+  {{- $items = $items | append (dict "label" (index $langNames .Language.Lang) "href" .RelPermalink "kind" (i18n "cmdk_kind_lang")) -}}
+{{- end -}}
+<dialog id="cmdk" class="cmdk" aria-label="{{ i18n "cmdk_label" }}">
+  <div class="cmdk-panel">
+    <input id="cmdk-input" class="cmdk-input" type="text" role="combobox"
+           aria-expanded="true" aria-controls="cmdk-list" aria-activedescendant=""
+           placeholder="{{ i18n "cmdk_placeholder" }}" autocomplete="off" spellcheck="false">
+    <ul id="cmdk-list" class="cmdk-list" role="listbox" aria-label="{{ i18n "cmdk_label" }}">
+      {{- range $i, $it := $items }}
+      <li id="cmdk-opt-{{ $i }}" class="cmdk-opt" role="option" data-href="{{ $it.href }}" data-label="{{ lower $it.label }}">
+        <span class="cmdk-opt-label">{{ $it.label }}</span>
+        <span class="cmdk-opt-kind">{{ $it.kind }}</span>
+      </li>
+      {{- end }}
+    </ul>
+    <p class="cmdk-empty" hidden>{{ i18n "cmdk_no_results" }}</p>
+  </div>
+</dialog>

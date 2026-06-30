@@ -42,3 +42,24 @@ other = "Back to home"
 
 [page_not_found]
 other = "The page you are looking for was not found."
+
+[cmdk_label]
+other = "Command palette"
+
+[cmdk_placeholder]
+other = "Search or jump to…"
+
+[cmdk_no_results]
+other = "No results"
+
+[cmdk_open]
+other = "Search"
+
+[cmdk_kind_page]
+other = "page"
+
+[cmdk_kind_service]
+other = "service"
+
+[cmdk_kind_lang]
+other = "language"

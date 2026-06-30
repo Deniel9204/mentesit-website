@@ -42,3 +42,24 @@ other = "Vissza a kezdőlapra"
 
 [page_not_found]
 other = "A keresett oldal nem található."
+
+[cmdk_label]
+other = "Parancspaletta"
+
+[cmdk_placeholder]
+other = "Keresés vagy ugrás…"
+
+[cmdk_no_results]
+other = "Nincs találat"
+
+[cmdk_open]
+other = "Keresés"
+
+[cmdk_kind_page]
+other = "oldal"
+
+[cmdk_kind_service]
+other = "szolgáltatás"
+
+[cmdk_kind_lang]
+other = "nyelv"

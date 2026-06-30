@@ -20,6 +20,11 @@
         <span class="brand-prompt" aria-hidden="true">&rsaquo;</span> {{ site.Title }}<span class="brand-caret" aria-hidden="true">_</span>
       </a>
       {{ partial "nav.html" . }}
+      <button type="button" class="cmdk-trigger" data-cmdk-open aria-haspopup="dialog" aria-controls="cmdk" hidden>
+        <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="10.5" y1="10.5" x2="15" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <kbd class="cmdk-trigger-key">/</kbd>
+        <span class="visually-hidden">{{ i18n "cmdk_open" }}</span>
+      </button>
       {{ partial "language-switcher.html" . }}
     </div>
   </header>
@@ -47,11 +52,12 @@
     <div class="status-bar">
       <div class="container status-inner">
         <span class="status-left">{{ site.Title }} — {{ site.Params.location }}</span>
-        <span class="status-right">{{ i18n "search_hint" }}</span>
+        <button type="button" class="status-search" data-cmdk-open aria-haspopup="dialog" aria-controls="cmdk" hidden>{{ i18n "search_hint" }}</button>
       </div>
     </div>
   </footer>
 
+  {{ partial "command-palette.html" . }}
   {{ partial "head/js.html" . }}
 </body>
 </html>
