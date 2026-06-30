@@ -15,6 +15,8 @@ safe(function () {
   if (reduceMotion || !("IntersectionObserver" in window)) return;
   var els = document.querySelectorAll(".site-main > section, .site-main > article");
   if (!els.length) return;
+  // Hiding CSS keys off .reveal-ready, added only now that we will reveal.
+  document.documentElement.classList.add("reveal-ready");
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
@@ -107,7 +109,41 @@ safe(function () {
   });
 });
 
-// 4) Live section ledger (scroll-spy) in the gutter rail.
+// 4) Contact form — fetch submit with inline status. Falls back to a native
+//    POST (server redirect) when JS is unavailable.
+safe(function () {
+  var form = document.querySelector("[data-contact-form]");
+  if (!form) return;
+  var status = form.querySelector(".form-status");
+  var btn = form.querySelector("button[type=submit]");
+
+  function show(msg, ok) {
+    if (!status) return;
+    status.textContent = msg;
+    status.className = "form-status " + (ok ? "is-ok" : "is-err");
+    status.hidden = false;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (status) { status.hidden = true; status.className = "form-status"; }
+    if (btn) btn.disabled = true;
+    fetch(form.action, {
+      method: "POST",
+      headers: { "Accept": "application/json", "X-Requested-With": "fetch" },
+      body: new FormData(form)
+    })
+      .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
+      .then(function (data) {
+        if (data && data.ok) { form.reset(); show(form.dataset.success || "OK", true); }
+        else { show(form.dataset.error || "Error", false); }
+      })
+      .catch(function () { show(form.dataset.error || "Error", false); })
+      .then(function () { if (btn) btn.disabled = false; });
+  });
+});
+
+// 5) Live section ledger (scroll-spy) in the gutter rail.
 safe(function () {
   var links = document.querySelectorAll(".ledger a[href^='#']");
   if (!links.length || !("IntersectionObserver" in window)) return;

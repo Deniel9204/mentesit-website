@@ -63,3 +63,24 @@ other = "szolgáltatás"
 
 [cmdk_kind_lang]
 other = "nyelv"
+
+[contact_direct]
+other = "Közvetlen elérhetőség"
+
+[form_name]
+other = "Neved"
+
+[form_email]
+other = "Email-címed"
+
+[form_message]
+other = "Üzeneted"
+
+[form_submit]
+other = "Üzenet küldése"
+
+[form_error]
+other = "Hiba történt. Kérlek, próbáld újra, vagy írj e-mailt."
+
+[form_hp]
+other = "Ezt a mezőt hagyd üresen"

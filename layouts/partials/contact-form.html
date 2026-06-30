@@ -1,0 +1,30 @@
+{{- /* Real POST form: works with JS off (server redirects on success). JS
+       enhances it with fetch + inline status. Honeypot + server-side
+       rate-limiting guard against spam. */ -}}
+<form class="contact-form" action="{{ site.Params.formEndpoint }}" method="post"
+      data-contact-form
+      data-success="{{ .Params.successMessage }}"
+      data-error="{{ i18n "form_error" }}">
+  <input type="hidden" name="lang" value="{{ site.Language.Lang }}">
+
+  {{/* Honeypot — hidden from people, tempting for bots. */}}
+  <div class="hp" aria-hidden="true">
+    <label>{{ i18n "form_hp" }}<input type="text" name="company_url" tabindex="-1" autocomplete="off"></label>
+  </div>
+
+  <div class="field">
+    <label for="cf-name">{{ i18n "form_name" }}</label>
+    <input id="cf-name" name="name" type="text" required maxlength="200" autocomplete="name">
+  </div>
+  <div class="field">
+    <label for="cf-email">{{ i18n "form_email" }}</label>
+    <input id="cf-email" name="email" type="email" required maxlength="200" autocomplete="email">
+  </div>
+  <div class="field">
+    <label for="cf-message">{{ i18n "form_message" }}</label>
+    <textarea id="cf-message" name="message" rows="6" required maxlength="5000"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-accent">{{ i18n "form_submit" }}</button>
+  <p class="form-status" role="status" aria-live="polite" hidden></p>
+</form>

@@ -1,0 +1,29 @@
+{{ define "main" }}
+<article class="panel contact-page">
+  <header class="panel-head">
+    <p class="panel-file" aria-hidden="true">{{ .RelPermalink }}</p>
+    <h1>{{ .Title }}</h1>
+  </header>
+
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+
+  <div class="contact-grid">
+    {{ partial "contact-form.html" . }}
+
+    <aside class="contact-aside">
+      <h2 class="contact-aside-title">{{ i18n "contact_direct" }}</h2>
+      <ul class="contact-channels">
+        {{ with or .Params.email site.Params.email }}
+        <li><span class="mono ch-label">email</span> <a href="mailto:{{ . }}">{{ . }}</a></li>
+        {{ end }}
+        {{ with or .Params.phone site.Params.phone }}
+        <li><span class="mono ch-label">tel</span> <a href="tel:{{ . | replaceRE `[^+0-9]` `` }}">{{ . }}</a></li>
+        {{ end }}
+        {{ with site.Params.location }}
+        <li><span class="mono ch-label">loc</span> {{ . }}</li>
+        {{ end }}
+      </ul>
+    </aside>
+  </div>
+</article>
+{{ end }}

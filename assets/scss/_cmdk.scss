@@ -98,17 +98,18 @@
 }
 
 // Scroll reveals ------------------------------------------------------------
-// Only hide-then-reveal when JS is present AND motion is allowed, so no-JS and
-// reduced-motion users always see content immediately.
+// Only hide-then-reveal once JS has committed to revealing (adds .reveal-ready)
+// AND motion is allowed. No-JS, reduced-motion, and no-IntersectionObserver
+// browsers never get .reveal-ready, so they always see content immediately.
 @media (prefers-reduced-motion: no-preference) {
-  .js .site-main > section,
-  .js .site-main > article {
+  .reveal-ready .site-main > section,
+  .reveal-ready .site-main > article {
     opacity: 0;
     transform: translateY(12px);
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
-  .js .site-main > section.is-visible,
-  .js .site-main > article.is-visible {
+  .reveal-ready .site-main > section.is-visible,
+  .reveal-ready .site-main > article.is-visible {
     opacity: 1;
     transform: none;
   }

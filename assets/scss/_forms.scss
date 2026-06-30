@@ -1,0 +1,47 @@
+// Contact form + contact details.
+
+.contact-grid {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+@media (min-width: 820px) {
+  .contact-grid { grid-template-columns: 1.4fr 1fr; align-items: start; }
+}
+
+.contact-form { display: grid; gap: var(--space-3); }
+.field { display: grid; gap: 0.4rem; }
+.field label { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); }
+.field input,
+.field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg);
+  color: var(--text);
+  border: var(--hairline);
+  border-radius: 8px;
+  padding: 0.7rem 0.8rem;
+  font-family: var(--font-body);
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.field textarea { resize: vertical; min-height: 7rem; }
+
+// Honeypot — off-screen, never display:none (bots skip hidden inputs).
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.contact-form button { justify-self: start; }
+.form-status { margin: 0; font-family: var(--font-mono); font-size: 0.9rem; }
+.form-status.is-ok { color: var(--accent); }
+.form-status.is-err { color: #F2A0A0; }
+
+.contact-aside-title { font-size: 1.1rem; margin-bottom: var(--space-2); }
+.contact-channels { display: grid; gap: 0.6rem; }
+.contact-channels li { display: flex; gap: 0.6rem; align-items: baseline; }
+.ch-label { color: var(--accent); font-size: 0.75rem; min-width: 3rem; }
+.contact-channels a { color: var(--accent-2); text-decoration: none; }
+.contact-channels a:hover { text-decoration: underline; }

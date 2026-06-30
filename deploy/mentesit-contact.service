@@ -1,0 +1,35 @@
+[Unit]
+Description=MentesIT / FreeIT contact form endpoint
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# Build first:  (cd contact-service && go build -o /opt/mentesit/contact .)
+ExecStart=/opt/mentesit/contact
+
+# Non-secret configuration
+Environment=CONTACT_ADDR=127.0.0.1:8081
+Environment=CONTACT_PATH=/api/contact
+Environment=SMTP_HOST=127.0.0.1
+Environment=SMTP_PORT=25
+Environment=MAIL_FROM=no-reply@mentesit.eu
+Environment=MAIL_TO=info@mentesit.eu
+Environment=SUCCESS_URL=https://mentesit.eu/kapcsolat/
+# Secrets (SMTP_USER / SMTP_PASS) belong in an EnvironmentFile, not the unit:
+# EnvironmentFile=-/etc/mentesit/contact.env
+
+# Hardening
+DynamicUser=yes
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=yes
+LockPersonality=yes
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

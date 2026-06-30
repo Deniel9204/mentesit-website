@@ -56,8 +56,8 @@ docs/              ARCHITECTURE.md (the plan)
 
 ## Milestones
 
-`M0` scaffold ✅ · `M1` chrome & tokens ✅ · `M2` nav & i18n · `M3` homepage ·
-`M4` templates & content · `M5` command palette + motion · `M6` contact form ·
+`M0` scaffold ✅ · `M1` chrome & tokens ✅ · `M2` nav & i18n ✅ · `M3` homepage ✅ ·
+`M4` templates & content · `M5` command palette ✅ · `M6` contact form ✅ ·
 `M7` SEO/a11y/perf · `M8` deploy & launch.
 
 Fonts are self-hosted and subset (Latin + Latin-Extended) in `static/fonts/`:
@@ -67,6 +67,7 @@ Inter 400/600, Space Grotesk (variable), JetBrains Mono 400 — regenerate with
 ## Notes / TODO
 
 - Self-hosted webfonts (Space Grotesk, Inter, JetBrains Mono) — done in **M1**.
-- Contact form (`/api/contact`) is wired in **M6**; `formEndpoint` lives in
-  `params.toml`.
+- Contact form: self-hosted Go endpoint in `contact-service/` (see its README);
+  deploy via `deploy/mentesit-contact.service`, proxied by nginx at
+  `/api/contact`. `formEndpoint` lives in `params.toml`.
 - Confirm contact email/phone in `config/_default/params.toml` before launch.

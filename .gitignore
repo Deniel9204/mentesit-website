@@ -16,3 +16,7 @@ node_modules/
 *.iml
 .serena/
 /tmp/
+
+# Go build output (contact-service is built straight to /opt in production)
+/contact-service/contact
+/contact-service/contact-service

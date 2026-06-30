@@ -63,3 +63,24 @@ other = "service"
 
 [cmdk_kind_lang]
 other = "language"
+
+[contact_direct]
+other = "Direct contact"
+
+[form_name]
+other = "Your name"
+
+[form_email]
+other = "Your email"
+
+[form_message]
+other = "Your message"
+
+[form_submit]
+other = "Send message"
+
+[form_error]
+other = "Something went wrong. Please try again or email us."
+
+[form_hp]
+other = "Leave this field empty"
