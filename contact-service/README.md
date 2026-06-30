@@ -25,6 +25,7 @@ go build -o /opt/mentesit/contact .
 | `MAIL_FROM`    | `no-reply@mentesit.eu`           | envelope/From — align with SPF/DKIM |
 | `MAIL_TO`      | `info@mentesit.eu`               | where messages are delivered |
 | `SUCCESS_URL`  | `https://mentesit.eu/kapcsolat/` | redirect target for no-JS POSTs |
+| `TRUSTED_PROXIES` | `127.0.0.0/8,::1/128`         | CIDRs/IPs whose `X-Forwarded-For` is trusted (your reverse proxy). Compose sets the web→contact network. |
 
 ## Deploy (systemd)
 
@@ -42,6 +43,8 @@ nginx proxies `/api/contact` to this service — see `../deploy/nginx.conf.sampl
 - `POST` with the honeypot field (`company_url`) filled → pretends success,
   sends nothing.
 - Per-IP rate limit: **5 requests / 10 minutes** (sliding window, in-memory).
+  `X-Forwarded-For` is only honored from a `TRUSTED_PROXIES` peer (right-most
+  non-proxy entry), so a client cannot spoof the header to evade the limit.
 - CR/LF stripped from header-bound fields → no mail-header injection.
 - `Accept: application/json` (the site's `fetch`) → JSON `{ok, message}`;
   otherwise a `303` redirect to `SUCCESS_URL`.

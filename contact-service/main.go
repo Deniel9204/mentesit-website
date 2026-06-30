@@ -30,6 +30,9 @@ type config struct {
 	mailFrom   string
 	mailTo     string
 	successURL string
+	// trustedProxies is a comma-separated list of CIDRs/IPs whose
+	// X-Forwarded-For header we honor (the reverse proxy in front of us).
+	trustedProxies string
 }
 
 func env(key, def string) string {
@@ -50,6 +53,9 @@ func loadConfig() config {
 		mailFrom:   env("MAIL_FROM", "no-reply@mentesit.eu"),
 		mailTo:     env("MAIL_TO", "info@mentesit.eu"),
 		successURL: env("SUCCESS_URL", "https://mentesit.eu/kapcsolat/"),
+		// Default trusts only loopback — correct when a host nginx proxies from
+		// 127.0.0.1. Container deployments set this to the proxy's network.
+		trustedProxies: env("TRUSTED_PROXIES", "127.0.0.0/8,::1/128"),
 	}
 }
 
@@ -83,13 +89,64 @@ func (l *rateLimiter) allow(ip string) bool {
 	return true
 }
 
-func clientIP(r *http.Request) string {
-	if xff := r.Header.Get("X-Forwarded-For"); xff != "" {
-		return strings.TrimSpace(strings.Split(xff, ",")[0])
+// proxySet is the set of networks we trust to set X-Forwarded-For.
+type proxySet []*net.IPNet
+
+func parseProxies(spec string) proxySet {
+	var ps proxySet
+	for _, part := range strings.Split(spec, ",") {
+		part = strings.TrimSpace(part)
+		if part == "" {
+			continue
+		}
+		if !strings.Contains(part, "/") { // bare IP -> single-host CIDR
+			if strings.Contains(part, ":") {
+				part += "/128"
+			} else {
+				part += "/32"
+			}
+		}
+		_, n, err := net.ParseCIDR(part)
+		if err != nil {
+			log.Printf("ignoring invalid TRUSTED_PROXIES entry %q: %v", part, err)
+			continue
+		}
+		ps = append(ps, n)
 	}
+	return ps
+}
+
+func (ps proxySet) contains(ip net.IP) bool {
+	for _, n := range ps {
+		if n.Contains(ip) {
+			return true
+		}
+	}
+	return false
+}
+
+// clientIP returns the address used for rate limiting. X-Forwarded-For is a
+// client-controlled header, so it is only honored when the request's direct
+// peer is a trusted proxy. nginx (proxy_add_x_forwarded_for) appends the real
+// peer on the right, so we walk right-to-left and return the first entry that
+// is not itself a trusted proxy — a value the client cannot spoof. Falls back
+// to the direct peer address.
+func (h handler) clientIP(r *http.Request) string {
 	host, _, err := net.SplitHostPort(r.RemoteAddr)
 	if err != nil {
-		return r.RemoteAddr
+		host = r.RemoteAddr
+	}
+	peer := net.ParseIP(host)
+	if peer == nil || !h.proxies.contains(peer) {
+		return host
+	}
+	parts := strings.Split(r.Header.Get("X-Forwarded-For"), ",")
+	for i := len(parts) - 1; i >= 0; i-- {
+		ip := net.ParseIP(strings.TrimSpace(parts[i]))
+		if ip == nil || h.proxies.contains(ip) {
+			continue
+		}
+		return ip.String()
 	}
 	return host
 }
@@ -104,8 +161,9 @@ func mimeEncode(s string) string {
 }
 
 type handler struct {
-	cfg config
-	rl  *rateLimiter
+	cfg     config
+	rl      *rateLimiter
+	proxies proxySet
 }
 
 func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -143,7 +201,7 @@ func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if !h.rl.allow(clientIP(r)) {
+	if !h.rl.allow(h.clientIP(r)) {
 		respond(false, http.StatusTooManyRequests, "too many requests")
 		return
 	}
@@ -164,7 +222,7 @@ func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	body := fmt.Sprintf("Név:   %s\nEmail: %s\nNyelv: %s\n\n%s\n", name, email, lang, message)
 
 	if err := h.send(email, subject, body); err != nil {
-		log.Printf("send error from %s: %v", clientIP(r), err)
+		log.Printf("send error from %s: %v", h.clientIP(r), err)
 		respond(false, http.StatusBadGateway, "could not send message")
 		return
 	}
@@ -192,7 +250,7 @@ func (h handler) send(replyTo, subject, body string) error {
 
 func main() {
 	cfg := loadConfig()
-	h := handler{cfg: cfg, rl: newRateLimiter(5, 10*time.Minute)}
+	h := handler{cfg: cfg, rl: newRateLimiter(5, 10*time.Minute), proxies: parseProxies(cfg.trustedProxies)}
 
 	mux := http.NewServeMux()
 	mux.Handle(cfg.path, h)
