@@ -3,10 +3,11 @@
 description = "MentesIT / FreeIT — egyedi szoftverfejlesztés, weboldalak, rendszerüzemeltetés és tárhely egy helyen."
 author = "MentesIT"
 
-# Contact details — TODO: confirm before launch (also shown in the status bar / footer).
+# Contact details (also shown in the status bar / footer).
+# email is the Cloudflare-routed address that forwards to the owner's mailbox.
 email = "info@mentesit.eu"
-phone = ""
-location = "Budapest, Magyarország"
+phone = "+36 70 434 2846"
+location = "Fonyód, Magyarország"
 
 # Contact form endpoint — wired up in milestone M6. Self-hosted /api/contact by default.
 formEndpoint = "/api/contact"

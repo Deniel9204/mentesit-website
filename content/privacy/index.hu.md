@@ -13,9 +13,10 @@ a Tanács (EU) 2016/679 rendeletével (GDPR).
 
 ## 1. Az adatkezelő
 
-- **Név:** MentesIT — <!-- TODO: pontos jogi név (cég / egyéni vállalkozó) -->[cégnév]
-- **Székhely:** <!-- TODO -->[cím]
-- **Nyilvántartási / adószám:** <!-- TODO -->[szám]
+- **Név:** MentesIT Kft.
+- **Székhely:** <!-- TODO: pontos cím (utca, házszám, irányítószám) -->Fonyód, [pontos cím]
+- **Cégjegyzékszám:** <!-- TODO: cégpapírból -->[cégjegyzékszám]
+- **Adószám:** <!-- TODO: cégpapírból -->[adószám]
 - **E-mail:** info@mentesit.eu
 
 ## 2. Milyen adatokat kezelünk, milyen célból és milyen jogalapon?
@@ -41,11 +42,20 @@ a Tanács (EU) 2016/679 rendeletével (GDPR).
 
 ## 4. Címzettek és adatfeldolgozók
 
-- Az üzeneteket a saját szerverünkről, <!-- TODO: e-mail/SMTP szolgáltató -->**[e-mail-szolgáltató]**
-  igénybevételével továbbítjuk az e-mail-fiókunkba.
-- A weboldalt **saját tárhelyen** üzemeltetjük.
-- **Nem** használunk harmadik féltől származó analitikát vagy hirdetést, és
-  **nem** továbbítunk adatot harmadik országba.
+A kapcsolatfelvételi üzenetek kézbesítéséhez a következő adatfeldolgozókat
+vesszük igénybe:
+
+- **Google LLC (Gmail SMTP)** — a weboldalról küldött üzenetek továbbítása.
+- **Cloudflare, Inc. (Email Routing)** — a beérkező e-mailek továbbítása a
+  postafiókunkba.
+
+Mindkét szolgáltató az Egyesült Államokban (is) működik, ezért az adatok
+továbbítása harmadik országba történhet — az EU–USA Adatvédelmi Keret (Data
+Privacy Framework), illetve az Európai Bizottság általános szerződéses
+feltételei (SCC) szerinti garanciák mellett.
+
+A weboldalt **saját tárhelyen** üzemeltetjük. **Nem** használunk harmadik féltől
+származó analitikai vagy hirdetési szolgáltatást.
 
 ## 5. Sütik (cookies)
 

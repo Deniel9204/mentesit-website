@@ -11,9 +11,10 @@ website visitors, in line with Regulation (EU) 2016/679 (GDPR).
 
 ## 1. Data controller
 
-- **Name:** FreeIT — <!-- TODO: exact legal name -->[company name]
-- **Registered seat:** <!-- TODO -->[address]
-- **Registration / VAT number:** <!-- TODO -->[number]
+- **Name:** MentesIT Kft. (trading as FreeIT)
+- **Registered seat:** <!-- TODO: full address (street, no., postcode) -->Fonyód, [full address], Hungary
+- **Company registration number:** <!-- TODO: from company papers -->[registration number]
+- **Tax number (VAT):** <!-- TODO: from company papers -->[tax number]
 - **Email:** info@mentesit.eu
 
 ## 2. What we process, why, and on what legal basis
@@ -39,11 +40,18 @@ website visitors, in line with Regulation (EU) 2016/679 (GDPR).
 
 ## 4. Recipients and processors
 
-- Messages are relayed from our own server to our mailbox using
-  <!-- TODO: email/SMTP provider -->**[email provider]**.
-- The website runs on **our own hosting**.
-- We use **no** third-party analytics or advertising, and we **do not** transfer
-  data to third countries.
+We use the following processors to deliver contact messages:
+
+- **Google LLC (Gmail SMTP)** — sending messages from the website.
+- **Cloudflare, Inc. (Email Routing)** — forwarding incoming email to our
+  mailbox.
+
+Both operate (also) in the United States, so data may be transferred to a third
+country — under the safeguards of the EU–US Data Privacy Framework and/or the
+European Commission's Standard Contractual Clauses (SCCs).
+
+The website runs on **our own hosting**. We use **no** third-party analytics or
+advertising service.
 
 ## 5. Cookies
 
