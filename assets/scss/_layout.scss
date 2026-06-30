@@ -120,10 +120,10 @@
   transition: color 140ms ease;
 }
 .ledger a:hover { color: var(--text); }
-.ledger .ln { color: var(--border); font-variant-numeric: tabular-nums; }
+.ledger .ln { color: var(--muted); font-variant-numeric: tabular-nums; }
 .ledger a.is-current { color: var(--accent); }
 .ledger a.is-current .ln { color: var(--accent); }
-.ledger-empty { display: grid; gap: 0.7rem; color: var(--border); }
+.ledger-empty { display: grid; gap: 0.7rem; color: var(--muted); }
 
 .section-title {
   display: flex;

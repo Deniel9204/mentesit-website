@@ -18,3 +18,14 @@
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:locale" content="{{ replace (site.Language.Locale | default site.Language.Lang) `-` `_` }}">
 <meta name="twitter:card" content="summary_large_image">
+{{- $ogimg := absURL "og/default.png" }}
+<meta property="og:image" content="{{ $ogimg }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ site.Title }}">
+<meta name="twitter:image" content="{{ $ogimg }}">
+
+{{ partial "schema/organization.html" . }}
+{{- if .IsHome }}{{ partial "schema/website.html" . }}{{ end }}
+{{- if and (eq .Type "services") (eq .Kind "page") }}{{ partial "schema/service.html" . }}{{ end }}
+{{- if not .IsHome }}{{ partial "schema/breadcrumb.html" . }}{{ end }}

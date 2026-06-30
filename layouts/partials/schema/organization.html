@@ -1,0 +1,16 @@
+{{- $org := dict
+  "@context" "https://schema.org"
+  "@type" "Organization"
+  "name" site.Title
+  "url" site.BaseURL
+  "logo" (absURL "favicon.svg")
+  "image" (absURL "og/default.png")
+  "areaServed" "HU"
+  "address" (dict "@type" "PostalAddress" "addressLocality" "Budapest" "addressCountry" "HU")
+-}}
+{{- with site.Params.email }}{{ $org = merge $org (dict "email" .) }}{{ end -}}
+{{- $same := slice -}}
+{{- with site.Params.social.github }}{{ $same = $same | append . }}{{ end -}}
+{{- with site.Params.social.linkedin }}{{ $same = $same | append . }}{{ end -}}
+{{- with $same }}{{ $org = merge $org (dict "sameAs" .) }}{{ end -}}
+<script type="application/ld+json">{{ $org | jsonify | safeJS }}</script>

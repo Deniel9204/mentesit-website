@@ -58,7 +58,11 @@ docs/              ARCHITECTURE.md (the plan)
 
 `M0` scaffold ✅ · `M1` chrome & tokens ✅ · `M2` nav & i18n ✅ · `M3` homepage ✅ ·
 `M4` templates & content · `M5` command palette ✅ · `M6` contact form ✅ ·
-`M7` SEO/a11y/perf · `M8` deploy & launch.
+`M7` SEO/a11y/perf ✅ · `M8` deploy & launch.
+
+SEO/a11y: JSON-LD (Organization/WebSite/Service/BreadcrumbList), OG image at
+`static/og/default.png`, hreflang + canonical, and a clean axe (WCAG 2.1 AA)
+pass on every page.
 
 Fonts are self-hosted and subset (Latin + Latin-Extended) in `static/fonts/`:
 Inter 400/600, Space Grotesk (variable), JetBrains Mono 400 — regenerate with

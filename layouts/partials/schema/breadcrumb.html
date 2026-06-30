@@ -1,0 +1,14 @@
+{{- $crumbs := slice -}}
+{{- range .Ancestors.Reverse }}{{ $crumbs = $crumbs | append . }}{{ end -}}
+{{- $crumbs = $crumbs | append . -}}
+{{- $items := slice -}}
+{{- range $i, $p := $crumbs -}}
+  {{- $name := cond $p.IsHome (site.Params.brand | default site.Title) $p.Title -}}
+  {{- $items = $items | append (dict "@type" "ListItem" "position" (add $i 1) "name" $name "item" $p.Permalink) -}}
+{{- end -}}
+{{- $bc := dict
+  "@context" "https://schema.org"
+  "@type" "BreadcrumbList"
+  "itemListElement" $items
+-}}
+<script type="application/ld+json">{{ $bc | jsonify | safeJS }}</script>

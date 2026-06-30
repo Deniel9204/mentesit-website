@@ -1,6 +1,9 @@
-<a class="card service-card" href="{{ .RelPermalink }}">
-  <span class="card-index" aria-hidden="true">{{ printf "%02d" (int .Weight) }}</span>
-  <h3 class="card-title">{{ .Title }}</h3>
-  {{ with .Params.summary }}<p class="card-summary">{{ . }}</p>{{ end }}
+{{- /* Accepts a page (default heading level h3) or a dict {page, level}. */ -}}
+{{- $p := . -}}{{- $level := "h3" -}}
+{{- if reflect.IsMap . }}{{ $p = .page }}{{ $level = .level }}{{ end -}}
+<a class="card service-card" href="{{ $p.RelPermalink }}">
+  <span class="card-index" aria-hidden="true">{{ printf "%02d" (int $p.Weight) }}</span>
+  {{ if eq $level "h2" }}<h2 class="card-title">{{ $p.Title }}</h2>{{ else }}<h3 class="card-title">{{ $p.Title }}</h3>{{ end }}
+  {{ with $p.Params.summary }}<p class="card-summary">{{ . }}</p>{{ end }}
   <span class="card-arrow" aria-hidden="true">&rarr;</span>
 </a>

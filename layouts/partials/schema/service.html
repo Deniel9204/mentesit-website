@@ -1,0 +1,11 @@
+{{- $svc := dict
+  "@context" "https://schema.org"
+  "@type" "Service"
+  "name" .Title
+  "serviceType" .Title
+  "url" .Permalink
+  "areaServed" "HU"
+  "provider" (dict "@type" "Organization" "name" site.Title "url" site.BaseURL)
+-}}
+{{- with .Description }}{{ $svc = merge $svc (dict "description" .) }}{{ end -}}
+<script type="application/ld+json">{{ $svc | jsonify | safeJS }}</script>
