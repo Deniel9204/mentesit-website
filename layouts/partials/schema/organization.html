@@ -1,3 +1,4 @@
+{{- $c := site.Params.company -}}
 {{- $org := dict
   "@context" "https://schema.org"
   "@type" "Organization"
@@ -5,10 +6,29 @@
   "url" site.BaseURL
   "logo" (absURL "favicon.svg")
   "image" (absURL "og/default.png")
+  "description" site.Params.description
   "areaServed" "HU"
-  "address" (dict "@type" "PostalAddress" "addressLocality" "Budapest" "addressCountry" "HU")
+  "knowsLanguage" (slice "hu" "en")
 -}}
+{{- with $c -}}
+  {{- $org = merge $org (dict
+    "legalName" .legalName
+    "foundingDate" .founded
+    "taxID" .taxId
+    "address" (dict
+      "@type" "PostalAddress"
+      "streetAddress" .streetAddress
+      "postalCode" .postalCode
+      "addressLocality" .locality
+      "addressCountry" .countryCode)
+    "identifier" (dict
+      "@type" "PropertyValue"
+      "propertyID" "HU:cégjegyzékszám"
+      "value" .regNumber)
+  ) -}}
+{{- end -}}
 {{- with site.Params.email }}{{ $org = merge $org (dict "email" .) }}{{ end -}}
+{{- with site.Params.phone }}{{ $org = merge $org (dict "telephone" (replaceRE `[^+0-9]` "" .)) }}{{ end -}}
 {{- $same := slice -}}
 {{- with site.Params.social.github }}{{ $same = $same | append . }}{{ end -}}
 {{- with site.Params.social.linkedin }}{{ $same = $same | append . }}{{ end -}}

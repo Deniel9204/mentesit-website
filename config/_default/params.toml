@@ -24,3 +24,14 @@ accent = "#5BE9B9"
 [social]
   github = ""
   linkedin = ""
+
+# Legal entity / structured data (single source of truth for JSON-LD).
+[company]
+  legalName     = "MentesIT Kft."
+  regNumber     = "14-09-318034"      # cégjegyzékszám
+  taxId         = "28998596-2-14"     # adószám
+  streetAddress = "Erdősor utca 14."
+  postalCode    = "8640"
+  locality      = "Fonyód"
+  countryCode   = "HU"
+  founded       = "2021"
