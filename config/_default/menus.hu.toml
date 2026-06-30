@@ -1,0 +1,57 @@
+# Hungarian main menu. pageRef resolves per-language, so these link to the HU
+# versions of each page. Weights set order.
+
+[[main]]
+  identifier = "home"
+  name = "Kezdőlap"
+  pageRef = "/"
+  weight = 10
+
+[[main]]
+  identifier = "services"
+  name = "Szolgáltatások"
+  pageRef = "/services"
+  weight = 20
+
+[[main]]
+  identifier = "references"
+  name = "Referenciák"
+  pageRef = "/references"
+  weight = 30
+
+[[main]]
+  identifier = "about"
+  name = "Rólunk"
+  pageRef = "/about"
+  weight = 40
+
+[[main]]
+  identifier = "contact"
+  name = "Kapcsolat"
+  pageRef = "/contact"
+  weight = 50
+
+# Footer reuses the same targets (kept separate so it can diverge later).
+[[footer]]
+  identifier = "services"
+  name = "Szolgáltatások"
+  pageRef = "/services"
+  weight = 10
+
+[[footer]]
+  identifier = "references"
+  name = "Referenciák"
+  pageRef = "/references"
+  weight = 20
+
+[[footer]]
+  identifier = "about"
+  name = "Rólunk"
+  pageRef = "/about"
+  weight = 30
+
+[[footer]]
+  identifier = "contact"
+  name = "Kapcsolat"
+  pageRef = "/contact"
+  weight = 40

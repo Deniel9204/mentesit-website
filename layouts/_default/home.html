@@ -1,0 +1,47 @@
+{{ define "gutter" }}
+<div class="gutter-inner">
+  <nav class="ledger" aria-label="{{ i18n "on_this_page" }}">
+    <ol>
+      <li><a href="#services"><span class="ln" aria-hidden="true">01</span> {{ i18n "our_services" }}</a></li>
+      <li><a href="#references"><span class="ln" aria-hidden="true">02</span> {{ i18n "references_title" }}</a></li>
+      <li><a href="#contact"><span class="ln" aria-hidden="true">03</span> {{ i18n "cta_quote" }}</a></li>
+    </ol>
+  </nav>
+</div>
+{{ end }}
+
+{{ define "main" }}
+<section class="hero panel">
+  <p class="panel-file" aria-hidden="true">~/{{ lower (site.Params.brand | default site.Title) }}/hero.md</p>
+  <h1 class="hero-heading">{{ .Params.heroHeading | default .Title }}</h1>
+  {{ with .Params.heroSub }}<p class="hero-sub">{{ . }}</p>{{ end }}
+  <div class="hero-cta">
+    {{ with site.GetPage "/contact" }}<a class="btn btn-accent" href="{{ .RelPermalink }}">{{ i18n "cta_quote" }}</a>{{ end }}
+    {{ with site.GetPage "/references" }}<a class="btn btn-ghost" href="{{ .RelPermalink }}">{{ i18n "cta_view_work" }} &rarr;</a>{{ end }}
+  </div>
+</section>
+
+<section class="section" id="services">
+  <h2 class="section-title"><span class="section-num" aria-hidden="true">01</span> {{ i18n "our_services" }}</h2>
+  <div class="card-grid">
+    {{ with site.GetPage "/services" }}
+      {{ range .Pages.ByWeight }}{{ partial "service-card.html" . }}{{ end }}
+    {{ end }}
+  </div>
+</section>
+
+{{ with site.GetPage "/references" }}
+  {{ $refs := first 3 (where .Pages "Params.featured" true) }}
+  {{ with $refs }}
+  <section class="section" id="references">
+    <h2 class="section-title"><span class="section-num" aria-hidden="true">02</span> {{ i18n "references_title" }}</h2>
+    <div class="card-grid">{{ range . }}{{ partial "reference-card.html" . }}{{ end }}</div>
+  </section>
+  {{ end }}
+{{ end }}
+
+<section class="section cta-band panel" id="contact">
+  <h2 class="cta-heading">{{ site.Params.tagline }}</h2>
+  {{ with site.GetPage "/contact" }}<a class="btn btn-accent" href="{{ .RelPermalink }}">{{ i18n "cta_quote" }}</a>{{ end }}
+</section>
+{{ end }}

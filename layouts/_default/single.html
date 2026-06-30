@@ -1,0 +1,33 @@
+{{ define "main" }}
+<article class="panel">
+  <header class="panel-head">
+    <p class="panel-file" aria-hidden="true">{{ .RelPermalink }}</p>
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.summary }}<p class="lead">{{ . }}</p>{{ end }}
+  </header>
+
+  {{ with .Params.metrics }}
+  <dl class="metrics">
+    {{ range . }}<div class="metric"><dt>{{ .label }}</dt><dd>{{ .value }}</dd></div>{{ end }}
+  </dl>
+  {{ end }}
+
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+
+  {{ with .Params.benefits }}
+  <ul class="benefits">
+    {{ range . }}<li>{{ . }}</li>{{ end }}
+  </ul>
+  {{ end }}
+
+  {{ with .Params.tech }}
+  <ul class="tag-list" aria-label="tech">
+    {{ range . }}<li>{{ . }}</li>{{ end }}
+  </ul>
+  {{ end }}
+
+  <p class="single-cta">
+    {{ with site.GetPage "/contact" }}<a class="btn btn-accent" href="{{ .RelPermalink }}">{{ default (i18n "cta_quote") $.Params.ctaLabel }}</a>{{ end }}
+  </p>
+</article>
+{{ end }}

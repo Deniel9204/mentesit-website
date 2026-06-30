@@ -1,0 +1,10 @@
+# Markup is mostly configured in hugo.toml; this file is reserved for future
+# goldmark / highlight tuning so it stays isolated from the main config.
+[goldmark.parser.attribute]
+  block = true
+  title = true
+
+[highlight]
+  noClasses = false
+  guessSyntax = false
+  tabWidth = 2

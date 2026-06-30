@@ -1,0 +1,41 @@
+# Main configuration — see config/_default/ for split config (languages, menus, params, markup).
+baseURL = "https://mentesit.eu/"
+defaultContentLanguage = "hu"
+defaultContentLanguageInSubdir = false   # HU at root, EN under /en/
+enableRobotsTXT = true
+enableEmoji = true
+enableInlineShortcodes = true
+titleCaseStyle = "none"
+timeZone = "Europe/Budapest"
+summaryLength = 30
+
+# RSS off — this is a brochure site, not a blog. Sitemap is still generated automatically.
+[outputs]
+  home     = ["HTML"]
+  section  = ["HTML"]
+  taxonomy = ["HTML"]
+  term     = ["HTML"]
+
+[minify]
+  minifyOutput = true
+
+[imaging]
+  quality        = 82
+  resampleFilter = "Lanczos"
+
+# Only `tech` is a taxonomy. NOTE: we deliberately do NOT register a `services`
+# taxonomy because its term-list URL (/services/) would collide with the
+# /services/ content section. Case studies link to services via the
+# `related_service` / `services` front-matter fields instead.
+[taxonomies]
+  tech = "tech"
+
+[pagination]
+  pagerSize = 12
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true            # allow inline HTML/SVG in content where needed
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel   = 3

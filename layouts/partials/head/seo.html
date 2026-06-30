@@ -1,0 +1,20 @@
+{{- $title := cond .IsHome site.Title (printf "%s · %s" .Title site.Title) -}}
+{{- $desc := or .Description site.Params.description -}}
+<title>{{ $title }}</title>
+{{ with $desc }}<meta name="description" content="{{ . }}">{{ end }}
+<link rel="canonical" href="{{ .Permalink }}">
+{{- range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
+{{- end }}
+{{- $xdefault := "" -}}
+{{- range .AllTranslations -}}{{- if eq .Language.Lang "hu" -}}{{- $xdefault = .Permalink -}}{{- end -}}{{- end -}}
+{{- with $xdefault }}
+<link rel="alternate" hreflang="x-default" href="{{ . }}">
+{{- end }}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ $title }}">
+{{ with $desc }}<meta property="og:description" content="{{ . }}">{{ end }}
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:locale" content="{{ replace (site.Language.Locale | default site.Language.Lang) `-` `_` }}">
+<meta name="twitter:card" content="summary_large_image">

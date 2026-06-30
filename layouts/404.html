@@ -1,0 +1,8 @@
+{{ define "main" }}
+<section class="panel error-panel">
+  <p class="panel-file" aria-hidden="true">404.html</p>
+  <h1 class="error-code">404</h1>
+  <p class="lead">{{ i18n "page_not_found" }}</p>
+  <p><a class="btn btn-accent" href="{{ site.Home.RelPermalink }}">{{ i18n "back_home" }}</a></p>
+</section>
+{{ end }}

@@ -1,0 +1,55 @@
+# English main menu.
+
+[[main]]
+  identifier = "home"
+  name = "Home"
+  pageRef = "/"
+  weight = 10
+
+[[main]]
+  identifier = "services"
+  name = "Services"
+  pageRef = "/services"
+  weight = 20
+
+[[main]]
+  identifier = "references"
+  name = "References"
+  pageRef = "/references"
+  weight = 30
+
+[[main]]
+  identifier = "about"
+  name = "About"
+  pageRef = "/about"
+  weight = 40
+
+[[main]]
+  identifier = "contact"
+  name = "Contact"
+  pageRef = "/contact"
+  weight = 50
+
+[[footer]]
+  identifier = "services"
+  name = "Services"
+  pageRef = "/services"
+  weight = 10
+
+[[footer]]
+  identifier = "references"
+  name = "References"
+  pageRef = "/references"
+  weight = 20
+
+[[footer]]
+  identifier = "about"
+  name = "About"
+  pageRef = "/about"
+  weight = 30
+
+[[footer]]
+  identifier = "contact"
+  name = "Contact"
+  pageRef = "/contact"
+  weight = 40

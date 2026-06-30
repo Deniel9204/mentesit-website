@@ -1,0 +1,26 @@
+{{ define "main" }}
+<article class="panel">
+  <header class="panel-head">
+    <p class="panel-file" aria-hidden="true">{{ .RelPermalink }}</p>
+    <h1>{{ .Title }}</h1>
+  </header>
+
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+
+  {{ if eq .Type "services" }}
+    <div class="card-grid">
+      {{ range .Pages.ByWeight }}{{ partial "service-card.html" . }}{{ end }}
+    </div>
+  {{ else if eq .Type "references" }}
+    <div class="card-grid">
+      {{ range .Pages.ByWeight }}{{ partial "reference-card.html" . }}{{ end }}
+    </div>
+  {{ else }}
+    {{ with .Pages }}
+    <ul class="link-list">
+      {{ range . }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+    </ul>
+    {{ end }}
+  {{ end }}
+</article>
+{{ end }}

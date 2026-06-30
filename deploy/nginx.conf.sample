@@ -1,0 +1,71 @@
+# Sample nginx vhost for MentesIT / FreeIT (static site).
+# Copy to /etc/nginx/sites-available/mentesit.eu and adjust paths/certs.
+
+# http -> https, and www -> apex
+server {
+    listen 80;
+    listen [::]:80;
+    server_name mentesit.eu www.mentesit.eu;
+    return 301 https://mentesit.eu$request_uri;
+}
+
+# www -> apex over https
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name www.mentesit.eu;
+
+    # ssl_certificate     /etc/letsencrypt/live/mentesit.eu/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/mentesit.eu/privkey.pem;
+
+    return 301 https://mentesit.eu$request_uri;
+}
+
+# main site
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name mentesit.eu;
+
+    root /var/www/mentesit/public;
+    index index.html;
+
+    # ssl_certificate     /etc/letsencrypt/live/mentesit.eu/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/mentesit.eu/privkey.pem;
+
+    # Security headers
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    # add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+    # Pretty URLs (Hugo emits .../index.html)
+    location / {
+        try_files $uri $uri/ $uri.html =404;
+    }
+
+    # Fingerprinted, content-hashed assets — cache hard.
+    location ~* \.(css|js|woff2?|svg|png|jpe?g|webp|avif|ico)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+
+    # HTML & sitemap — always revalidate.
+    location ~* \.(html|xml)$ {
+        add_header Cache-Control "no-cache";
+    }
+
+    # Contact form endpoint (wired in milestone M6).
+    # location = /api/contact {
+    #     proxy_pass http://127.0.0.1:8081;
+    #     proxy_set_header X-Forwarded-For $remote_addr;
+    # }
+
+    error_page 404 /404.html;
+
+    gzip_static on;
+    # brotli_static on;   # if the brotli module is available
+}

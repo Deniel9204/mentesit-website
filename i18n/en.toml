@@ -1,0 +1,41 @@
+[skip_to_content]
+other = "Skip to content"
+
+[nav_label]
+other = "Main menu"
+
+[footer_nav_label]
+other = "Footer menu"
+
+[switch_language]
+other = "Switch language"
+
+[cta_quote]
+other = "Request a quote"
+
+[cta_view_work]
+other = "See our work"
+
+[search_hint]
+other = "Press / to search"
+
+[read_more]
+other = "Read more"
+
+[on_this_page]
+other = "On this page"
+
+[our_services]
+other = "Our services"
+
+[references_title]
+other = "References"
+
+[all_rights_reserved]
+other = "All rights reserved."
+
+[back_home]
+other = "Back to home"
+
+[page_not_found]
+other = "The page you are looking for was not found."

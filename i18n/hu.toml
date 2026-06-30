@@ -1,0 +1,41 @@
+[skip_to_content]
+other = "Ugrás a tartalomra"
+
+[nav_label]
+other = "Főmenü"
+
+[footer_nav_label]
+other = "Lábléc menü"
+
+[switch_language]
+other = "Nyelvváltás"
+
+[cta_quote]
+other = "Kérek ajánlatot"
+
+[cta_view_work]
+other = "Munkáink megtekintése"
+
+[search_hint]
+other = "Nyomd meg a / billentyűt"
+
+[read_more]
+other = "Tovább"
+
+[on_this_page]
+other = "Ezen az oldalon"
+
+[our_services]
+other = "Szolgáltatásaink"
+
+[references_title]
+other = "Referenciák"
+
+[all_rights_reserved]
+other = "Minden jog fenntartva."
+
+[back_home]
+other = "Vissza a kezdőlapra"
+
+[page_not_found]
+other = "A keresett oldal nem található."

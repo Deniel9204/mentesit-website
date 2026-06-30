@@ -1,0 +1,22 @@
+# HU is the default (weight 1); EN is secondary (weight 2).
+# Translations are linked by `translationKey` in front matter, so HU and EN
+# may have different localized slugs and still stay paired.
+# (Hugo ≥ 0.158 uses `label`/`locale` instead of languageName/languageCode.)
+
+[hu]
+  label = "Magyar"
+  locale = "hu-HU"
+  weight = 1
+  title = "MentesIT"
+  [hu.params]
+    brand = "MentesIT"
+    tagline = "Egyedi szoftverfejlesztés és megbízható IT."
+
+[en]
+  label = "English"
+  locale = "en"
+  weight = 2
+  title = "FreeIT"
+  [en.params]
+    brand = "FreeIT"
+    tagline = "Custom software development and dependable IT."

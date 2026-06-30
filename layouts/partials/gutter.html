@@ -1,0 +1,16 @@
+{{- $heads := .Fragments.Headings -}}
+<div class="gutter-inner">
+  {{- with $heads }}
+  <nav class="ledger" aria-label="{{ i18n "on_this_page" }}">
+    <ol>
+      {{- range $i, $h := . }}
+      <li><a href="#{{ $h.ID }}"><span class="ln" aria-hidden="true">{{ printf "%02d" (add $i 1) }}</span> {{ $h.Title }}</a></li>
+      {{- end }}
+    </ol>
+  </nav>
+  {{- else }}
+  <div class="ledger-empty" aria-hidden="true">
+    {{- range seq 6 }}<span class="ln">{{ printf "%02d" . }}</span>{{- end }}
+  </div>
+  {{- end }}
+</div>

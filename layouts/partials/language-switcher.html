@@ -1,0 +1,9 @@
+<div class="lang-switch">
+  <ul aria-label="{{ i18n "switch_language" }}">
+    {{- range .AllTranslations }}
+      <li>
+        <a href="{{ .RelPermalink }}" hreflang="{{ .Language.Lang }}" lang="{{ .Language.Lang }}"{{ if eq .Language.Lang $.Site.Language.Lang }} aria-current="true"{{ end }}>{{ .Language.Lang | upper }}</a>
+      </li>
+    {{- end }}
+  </ul>
+</div>

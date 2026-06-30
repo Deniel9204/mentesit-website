@@ -1,0 +1,10 @@
+{{- $opts := dict "minify" hugo.IsProduction "target" "es2018" "format" "iife" -}}
+{{- with resources.Get "js/main.js" -}}
+  {{- $js := . | js.Build $opts -}}
+  {{- if hugo.IsProduction -}}
+    {{- $js = $js | fingerprint "sha256" -}}
+    <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous" defer></script>
+  {{- else -}}
+    <script src="{{ $js.RelPermalink }}" defer></script>
+  {{- end -}}
+{{- end -}}

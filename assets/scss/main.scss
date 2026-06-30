@@ -1,0 +1,10 @@
+// MentesIT / FreeIT — main stylesheet entry point.
+// Design direction: "stdout — the elegant shell" (calm, art-directed IDE).
+// Full design tokens live in _tokens.scss; this file only wires modules.
+
+@use "fonts";
+@use "tokens";
+@use "reset";
+@use "typography";
+@use "layout";
+@use "components";

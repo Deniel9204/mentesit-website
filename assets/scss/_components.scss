@@ -1,0 +1,108 @@
+// Components: panels, cards, buttons, hero, and content bits.
+
+// Panel — the "editor file" surface used across pages.
+.panel {
+  background: var(--surface);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  position: relative;
+}
+.panel + .panel { margin-top: var(--space-3); }
+.panel-file {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: var(--space-2);
+  word-break: break-all;
+}
+.panel-head { margin-bottom: var(--space-3); }
+.lead { color: var(--muted); font-size: 1.1em; margin-top: var(--space-2); max-width: var(--maxw); }
+
+// Buttons -------------------------------------------------------------------
+.btn {
+  display: inline-block;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  border: var(--hairline);
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+  &:hover { transform: translateY(-1px); }
+}
+.btn-accent { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn-accent:hover { background: color-mix(in srgb, var(--accent) 88%, #fff); }
+.btn-ghost { background: transparent; color: var(--text); }
+.btn-ghost:hover { border-color: var(--accent); }
+
+// Hero ----------------------------------------------------------------------
+.hero { padding-block: var(--space-5); }
+.hero-heading { max-width: 18ch; margin-top: var(--space-2); }
+.hero-sub { color: var(--muted); font-size: 1.2rem; margin-top: var(--space-3); max-width: 48ch; }
+.hero-cta { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-4); }
+
+// Cards ---------------------------------------------------------------------
+.card {
+  display: block;
+  background: var(--bg);
+  border: var(--hairline);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 140ms ease, transform 140ms ease, background 140ms ease;
+  position: relative;
+  &:hover { border-color: var(--accent); transform: translateY(-2px); background: var(--surface-2); }
+}
+.card-index { font-family: var(--font-mono); color: var(--accent); font-size: 0.8rem; }
+.card-file { font-family: var(--font-mono); color: var(--muted); font-size: 0.75rem; }
+.card-title { margin-top: 0.4rem; font-variation-settings: "wght" 600; }
+@media (prefers-reduced-motion: no-preference) {
+  .card-title { transition: font-variation-settings 220ms ease; }
+}
+.service-card:hover .card-title { font-variation-settings: "wght" 700; }
+.card-summary { color: var(--muted); margin-top: 0.5rem; font-size: 0.95rem; }
+.card-arrow { color: var(--accent); position: absolute; top: var(--space-3); right: var(--space-3); }
+
+// Content bits --------------------------------------------------------------
+.benefits {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: var(--space-3);
+  max-width: var(--maxw);
+}
+.benefits li { padding-left: 1.5rem; position: relative; }
+.benefits li::before { content: "›"; color: var(--accent); position: absolute; left: 0; font-family: var(--font-mono); }
+
+.tag-list { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: var(--space-2); }
+.tag-list li {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  border: var(--hairline);
+  border-radius: 6px;
+  padding: 0.15rem 0.5rem;
+}
+
+.metrics { display: flex; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-3); }
+.metric dt { font-family: var(--font-mono); color: var(--muted); font-size: 0.8rem; }
+.metric dd { font-family: var(--font-display); font-size: 1.8rem; color: var(--accent); }
+
+.link-list { display: grid; gap: 0.5rem; margin-top: var(--space-3); }
+.link-list a { color: var(--accent-2); text-decoration: none; }
+
+.single-cta { margin-top: var(--space-4); }
+
+// CTA band ------------------------------------------------------------------
+.cta-band { text-align: center; }
+.cta-heading { margin-bottom: var(--space-3); }
+
+// 404 -----------------------------------------------------------------------
+.error-panel { text-align: center; }
+.error-code { font-family: var(--font-mono); font-size: clamp(3rem, 10vw, 6rem); color: var(--accent); }
+
+// Small screens -------------------------------------------------------------
+@media (max-width: 640px) {
+  .header-inner { gap: var(--space-2); }
+  .site-nav ul { gap: var(--space-2); font-size: 0.95rem; }
+}

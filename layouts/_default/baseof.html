@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Lang }}" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0E1116">
+  {{ partial "head/seo.html" . }}
+  <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+  <link rel="preload" href="{{ "fonts/inter-400.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ "fonts/space-grotesk-var.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+  {{ partial "head/css.html" . }}
+</head>
+<body>
+  <a class="skip-link" href="#main">{{ i18n "skip_to_content" }}</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="{{ site.Home.RelPermalink }}">
+        <span class="brand-prompt" aria-hidden="true">&rsaquo;</span> {{ site.Title }}<span class="brand-caret" aria-hidden="true">_</span>
+      </a>
+      {{ partial "nav.html" . }}
+      {{ partial "language-switcher.html" . }}
+    </div>
+  </header>
+
+  <div class="editor">
+    <aside class="gutter">{{ block "gutter" . }}{{ partial "gutter.html" . }}{{ end }}</aside>
+    <main id="main" class="site-main">
+      {{ block "main" . }}{{ end }}
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <p class="footer-rev">REV. A — {{ site.Params.established }}</p>
+        <p class="footer-name">{{ site.Title }} · {{ site.Params.location }}</p>
+        {{ with site.Params.email }}<p><a href="mailto:{{ . }}">{{ . }}</a></p>{{ end }}
+      </div>
+      <nav class="footer-nav" aria-label="{{ i18n "footer_nav_label" }}">
+        <ul>
+          {{ range site.Menus.footer }}<li><a href="{{ .URL }}">{{ .Name }}</a></li>{{ end }}
+        </ul>
+      </nav>
+    </div>
+    <div class="status-bar">
+      <div class="container status-inner">
+        <span class="status-left">{{ site.Title }} — {{ site.Params.location }}</span>
+        <span class="status-right">{{ i18n "search_hint" }}</span>
+      </div>
+    </div>
+  </footer>
+
+  {{ partial "head/js.html" . }}
+</body>
+</html>

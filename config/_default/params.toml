@@ -1,0 +1,25 @@
+# Site-wide parameters. Values marked TODO must be confirmed by the owner.
+
+description = "MentesIT / FreeIT — egyedi szoftverfejlesztés, weboldalak, rendszerüzemeltetés és tárhely egy helyen."
+author = "MentesIT"
+
+# Contact details — TODO: confirm before launch (also shown in the status bar / footer).
+email = "info@mentesit.eu"
+phone = ""
+location = "Budapest, Magyarország"
+
+# Contact form endpoint — wired up in milestone M6. Self-hosted /api/contact by default.
+formEndpoint = "/api/contact"
+
+# Brand
+brandHu = "MentesIT"
+brandEn = "FreeIT"
+domain = "mentesit.eu"
+established = "2026"
+
+# Brand accent (kept in sync with assets/scss/_tokens.scss)
+accent = "#5BE9B9"
+
+[social]
+  github = ""
+  linkedin = ""
