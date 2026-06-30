@@ -1,10 +1,16 @@
 {{- $heads := .Fragments.Headings -}}
+{{- /* When the body starts at H2 (no H1), Fragments.Headings is a single
+       empty-ID root wrapping the real headings — unwrap it so the ledger links
+       get a real target and an accessible name (the heading title). */ -}}
+{{- if and (eq (len $heads) 1) (not (index $heads 0).ID) }}{{ $heads = (index $heads 0).Headings }}{{ end -}}
 <div class="gutter-inner">
   {{- with $heads }}
   <nav class="ledger" aria-label="{{ i18n "on_this_page" }}">
     <ol>
       {{- range $i, $h := . }}
-      <li><a href="#{{ $h.ID }}"><span class="ln" aria-hidden="true">{{ printf "%02d" (add $i 1) }}</span> {{ $h.Title }}</a></li>
+      {{- with $h.ID }}
+      <li><a href="#{{ . }}"><span class="ln" aria-hidden="true">{{ printf "%02d" (add $i 1) }}</span> {{ $h.Title }}</a></li>
+      {{- end }}
       {{- end }}
     </ol>
   </nav>
