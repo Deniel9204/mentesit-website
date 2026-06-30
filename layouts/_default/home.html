@@ -4,15 +4,22 @@
     <ol>
       <li><a href="#services"><span class="ln" aria-hidden="true">01</span> {{ i18n "our_services" }}</a></li>
       <li><a href="#references"><span class="ln" aria-hidden="true">02</span> {{ i18n "references_title" }}</a></li>
-      <li><a href="#contact"><span class="ln" aria-hidden="true">03</span> {{ i18n "cta_quote" }}</a></li>
+      <li><a href="#process"><span class="ln" aria-hidden="true">03</span> {{ i18n "our_process" }}</a></li>
+      <li><a href="#contact"><span class="ln" aria-hidden="true">04</span> {{ i18n "cta_quote" }}</a></li>
     </ol>
   </nav>
 </div>
 {{ end }}
 
 {{ define "main" }}
+{{/* ---------- Hero (typed boot -> headline; real text always in DOM) ---------- */}}
 <section class="hero panel">
   <p class="panel-file" aria-hidden="true">~/{{ lower (site.Params.brand | default site.Title) }}/hero.md</p>
+  {{ with .Params.heroBootLines }}
+  <div class="boot" data-typed aria-hidden="true">
+    {{ range . }}<span class="boot-line">{{ . }}</span>{{ end }}
+  </div>
+  {{ end }}
   <h1 class="hero-heading">{{ .Params.heroHeading | default .Title }}</h1>
   {{ with .Params.heroSub }}<p class="hero-sub">{{ . }}</p>{{ end }}
   <div class="hero-cta">
@@ -21,15 +28,55 @@
   </div>
 </section>
 
-<section class="section" id="services">
+{{/* ---------- Capabilities ---------- */}}
+{{ with .Params.capabilities }}
+<section class="section capabilities">
+  {{ with $.Params.capabilitiesLabel }}<p class="cap-label">{{ . }}</p>{{ end }}
+  <ul class="chips">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+</section>
+{{ end }}
+
+{{/* ---------- Services: custom software at the centre, others orbiting ---------- */}}
+{{ with (site.GetPage "/services") }}
+{{ $services := .Pages.ByWeight }}
+{{ if $services }}
+<section class="section services" id="services">
   <h2 class="section-title"><span class="section-num" aria-hidden="true">01</span> {{ i18n "our_services" }}</h2>
-  <div class="card-grid">
-    {{ with site.GetPage "/services" }}
-      {{ range .Pages.ByWeight }}{{ partial "service-card.html" . }}{{ end }}
+  {{ $core := index $services 0 }}
+  <div class="services-core">
+    <a class="card service-core-card" href="{{ $core.RelPermalink }}">
+      <span class="card-index" aria-hidden="true">{{ printf "%02d" (int $core.Weight) }}</span>
+      <h3 class="card-title">{{ $core.Title }}</h3>
+      {{ with $core.Params.summary }}<p class="card-summary">{{ . }}</p>{{ end }}
+      {{ with $core.Params.benefits }}<ul class="core-benefits">{{ range first 3 . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
+      <span class="card-arrow" aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
+  <div class="services-orbit card-grid">
+    {{ range (after 1 $services) }}{{ partial "service-card.html" . }}{{ end }}
+  </div>
+</section>
+{{ end }}
+{{ end }}
+
+{{/* ---------- Proof: a diff + metrics, framed as terminal output ---------- */}}
+{{ if or .Params.proofBefore .Params.proofMetrics }}
+<section class="section proof">
+  <div class="panel">
+    {{ with .Params.proofFile }}<p class="panel-file" aria-hidden="true">{{ . }}</p>{{ end }}
+    {{ if or .Params.proofBefore .Params.proofAfter }}
+    <pre class="diff"><code>{{ range .Params.proofBefore }}<span class="diff-del">- {{ . }}</span>
+{{ end }}{{ range .Params.proofAfter }}<span class="diff-add">+ {{ . }}</span>
+{{ end }}</code></pre>
+    {{ end }}
+    {{ with .Params.proofMetrics }}
+    <dl class="metrics">{{ range . }}<div class="metric"><dt>{{ .label }}</dt><dd>{{ .value }}</dd></div>{{ end }}</dl>
     {{ end }}
   </div>
 </section>
+{{ end }}
 
+{{/* ---------- References ---------- */}}
 {{ with site.GetPage "/references" }}
   {{ $refs := first 3 (where .Pages "Params.featured" true) }}
   {{ with $refs }}
@@ -40,6 +87,35 @@
   {{ end }}
 {{ end }}
 
+{{/* ---------- Process ledger ---------- */}}
+{{ with .Params.process }}
+<section class="section process" id="process">
+  <h2 class="section-title"><span class="section-num" aria-hidden="true">03</span> {{ i18n "our_process" }}</h2>
+  <ol class="process-list">
+    {{ range $i, $s := . }}
+    <li class="process-step">
+      <span class="step-num" aria-hidden="true">{{ printf "%02d" (add $i 1) }}</span>
+      <div>
+        <h3 class="step-title">{{ $s.title }}</h3>
+        {{ with $s.body }}<p class="step-body">{{ . }}</p>{{ end }}
+      </div>
+    </li>
+    {{ end }}
+  </ol>
+</section>
+{{ end }}
+
+{{/* ---------- About teaser ---------- */}}
+{{ with .Params.aboutTeaser }}
+<section class="section about-teaser panel">
+  <p class="panel-file" aria-hidden="true">~/about.md</p>
+  {{ with $.Params.aboutHeading }}<h2>{{ . }}</h2>{{ end }}
+  <p class="lead">{{ . }}</p>
+  {{ with site.GetPage "/about" }}<a class="btn btn-ghost" href="{{ .RelPermalink }}">{{ i18n "read_more" }} &rarr;</a>{{ end }}
+</section>
+{{ end }}
+
+{{/* ---------- Final CTA ---------- */}}
 <section class="section cta-band panel" id="contact">
   <h2 class="cta-heading">{{ site.Params.tagline }}</h2>
   {{ with site.GetPage "/contact" }}<a class="btn btn-accent" href="{{ .RelPermalink }}">{{ i18n "cta_quote" }}</a>{{ end }}

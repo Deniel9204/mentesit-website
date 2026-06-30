@@ -1,0 +1,99 @@
+// Homepage-specific components ("stdout — the elegant shell").
+
+// Typed boot hero ----------------------------------------------------------
+.boot {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: grid;
+  gap: 0.2rem;
+  margin-bottom: var(--space-3);
+  min-height: 3.4em; // reserve space so typing doesn't shift layout
+}
+.boot-line { white-space: pre; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .boot.typing .boot-line.typing-active::after,
+  .boot.typed-done .boot-line:last-child::after {
+    content: "▍";
+    color: var(--accent);
+    animation: blink 1.1s steps(1) infinite;
+  }
+}
+
+// Capabilities -------------------------------------------------------------
+.capabilities .cap-label {
+  font-family: var(--font-mono);
+  color: var(--accent-2);
+  margin-bottom: var(--space-2);
+}
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chips li {
+  border: var(--hairline);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.9rem;
+  background: var(--surface);
+}
+
+// Services: core + orbit ---------------------------------------------------
+.services-core { margin-bottom: var(--space-3); }
+.service-core-card {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--surface)), var(--surface));
+  padding: var(--space-4);
+}
+.service-core-card .card-index { color: var(--accent); }
+.service-core-card .card-title { font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem); }
+.core-benefits { display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; margin-top: var(--space-2); }
+.core-benefits li { color: var(--muted); font-size: 0.9rem; padding-left: 1rem; position: relative; }
+.core-benefits li::before {
+  content: "›"; color: var(--accent); position: absolute; left: 0; font-family: var(--font-mono);
+}
+
+// connective hairline from the core down into the orbiting grid
+.services-orbit { position: relative; }
+@media (min-width: 720px) {
+  .services-orbit::before {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--space-3));
+    left: 50%;
+    width: 1px;
+    height: var(--space-3);
+    background: var(--border);
+  }
+}
+
+// Diff proof ---------------------------------------------------------------
+.diff {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  margin-top: var(--space-2);
+  border: var(--hairline);
+  border-radius: 8px;
+  background: var(--bg);
+  padding: var(--space-2) var(--space-3);
+}
+.diff-del { color: #F2A0A0; display: block; }
+.diff-add { color: var(--accent); display: block; }
+.proof .metrics { margin-top: var(--space-3); margin-bottom: 0; }
+
+// Process ledger -----------------------------------------------------------
+.process-list { display: grid; }
+.process-step {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  border-top: var(--hairline);
+}
+.process-step:first-child { border-top: 0; }
+.step-num { font-family: var(--font-mono); color: var(--accent); font-size: 1.1rem; }
+.step-title { font-size: 1.1rem; }
+.step-body { color: var(--muted); margin-top: 0.2rem; }
+
+// About teaser -------------------------------------------------------------
+.about-teaser .lead { margin-bottom: var(--space-3); }
