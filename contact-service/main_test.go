@@ -1,8 +1,13 @@
 package main
 
 import (
+	"bytes"
+	"mime/multipart"
 	"net/http"
+	"net/http/httptest"
+	"net/url"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
 )
@@ -42,6 +47,66 @@ func TestClientIP(t *testing.T) {
 				t.Fatalf("clientIP=%q want %q", got, c.want)
 			}
 		})
+	}
+}
+
+func testHandler() handler {
+	return handler{
+		// smtpPort 1 refuses fast, so a *valid* submission ends in 502 (send
+		// failed) rather than 400 (parse/validate failed) — that's the signal.
+		cfg:     config{path: "/api/contact", smtpHost: "127.0.0.1", smtpPort: "1", mailFrom: "a@b.c", mailTo: "d@e.f"},
+		rl:      newRateLimiter(1000, time.Minute),
+		proxies: parseProxies("127.0.0.0/8"),
+	}
+}
+
+func serve(h handler, r *http.Request) int {
+	w := httptest.NewRecorder()
+	h.ServeHTTP(w, r)
+	return w.Code
+}
+
+// Both content types the front-end can produce must parse. A 400 here means the
+// fields were read as empty (the multipart/ParseForm bug).
+func TestContactParsesUrlencodedAndMultipart(t *testing.T) {
+	form := map[string]string{"name": "Anna", "email": "anna@example.com", "message": "Szia", "lang": "hu"}
+
+	t.Run("urlencoded", func(t *testing.T) {
+		vals := url.Values{}
+		for k, v := range form {
+			vals.Set(k, v)
+		}
+		r := httptest.NewRequest(http.MethodPost, "/api/contact", strings.NewReader(vals.Encode()))
+		r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		if code := serve(testHandler(), r); code != http.StatusBadGateway {
+			t.Fatalf("urlencoded: got %d, want 502 (valid input, SMTP unreachable); 400 = parse bug", code)
+		}
+	})
+
+	t.Run("multipart", func(t *testing.T) {
+		var body bytes.Buffer
+		mw := multipart.NewWriter(&body)
+		for k, v := range form {
+			_ = mw.WriteField(k, v)
+		}
+		_ = mw.Close()
+		r := httptest.NewRequest(http.MethodPost, "/api/contact", &body)
+		r.Header.Set("Content-Type", mw.FormDataContentType())
+		if code := serve(testHandler(), r); code != http.StatusBadGateway {
+			t.Fatalf("multipart: got %d, want 502 (valid input, SMTP unreachable); 400 = parse bug", code)
+		}
+	})
+}
+
+// Honeypot filled -> pretend success, send nothing (200, never 502).
+func TestContactHoneypot(t *testing.T) {
+	vals := url.Values{"name": {"Bot"}, "email": {"b@x.io"}, "message": {"spam"}, "company_url": {"http://spam"}}
+	r := httptest.NewRequest(http.MethodPost, "/api/contact", strings.NewReader(vals.Encode()))
+	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Accept", "application/json") // mirrors the site's fetch submit
+	// 200 (fake success), and crucially not 502 — no SMTP attempt is made.
+	if code := serve(testHandler(), r); code != http.StatusOK {
+		t.Fatalf("honeypot: got %d, want 200", code)
 	}
 }
 

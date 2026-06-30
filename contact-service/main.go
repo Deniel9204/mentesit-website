@@ -190,7 +190,15 @@ func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, msg, code)
 	}
 
-	if err := r.ParseForm(); err != nil {
+	// Accept both urlencoded and multipart bodies. ParseForm alone does not
+	// read a multipart body, which would then make PostFormValue return "".
+	var perr error
+	if strings.HasPrefix(r.Header.Get("Content-Type"), "multipart/form-data") {
+		perr = r.ParseMultipartForm(64 * 1024)
+	} else {
+		perr = r.ParseForm()
+	}
+	if perr != nil {
 		respond(false, http.StatusBadRequest, "invalid form")
 		return
 	}

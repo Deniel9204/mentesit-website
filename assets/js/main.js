@@ -131,7 +131,9 @@ safe(function () {
     fetch(form.action, {
       method: "POST",
       headers: { "Accept": "application/json", "X-Requested-With": "fetch" },
-      body: new FormData(form)
+      // URLSearchParams -> application/x-www-form-urlencoded (no file fields),
+      // which the endpoint's ParseForm reads directly.
+      body: new URLSearchParams(new FormData(form))
     })
       .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
       .then(function (data) {
