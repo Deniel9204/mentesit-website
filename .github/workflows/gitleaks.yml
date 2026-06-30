@@ -1,0 +1,33 @@
+name: secrets
+
+# Secret-scanning guard: fails the build if a credential is committed anywhere
+# in history. Runs the gitleaks binary directly (transparent, pinned).
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history so every commit is scanned
+
+      - name: Run gitleaks
+        env:
+          # renovate: datasource=github-releases depName=gitleaks/gitleaks
+          GITLEAKS_VERSION: 8.30.1
+        run: |
+          curl -fsSL -o /tmp/gitleaks.tar.gz \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
+          # --redact keeps any match out of the public CI logs; non-zero exit fails the job.
+          /tmp/gitleaks detect --source . --redact -v --exit-code 1
