@@ -12,9 +12,9 @@ website visitors, in line with Regulation (EU) 2016/679 (GDPR).
 ## 1. Data controller
 
 - **Name:** MentesIT Kft. (trading as FreeIT)
-- **Registered seat:** <!-- TODO: full address (street, no., postcode) -->Fonyód, [full address], Hungary
-- **Company registration number:** <!-- TODO: from company papers -->[registration number]
-- **Tax number (VAT):** <!-- TODO: from company papers -->[tax number]
+- **Registered seat:** 8640 Fonyód, Erdősor utca 14., Hungary
+- **Company registration number:** <!-- TODO: from company papers (14-09-……) -->[registration number]
+- **Tax number:** 28998596-2-14
 - **Email:** info@mentesit.eu
 
 ## 2. What we process, why, and on what legal basis

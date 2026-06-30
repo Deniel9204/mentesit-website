@@ -94,6 +94,29 @@ ALTCHA_HMAC_KEY=                    # openssl rand -hex 32 (else ephemeral)
 The `web` container serves on `:80` (mapped to `WEB_PORT`) and proxies
 `POST /api/contact` to the `contact` container over the compose network.
 
+### Sending mail via Gmail SMTP
+
+If you relay outgoing mail through Gmail (with Cloudflare Email Routing handling
+inbound forwarding to your inbox), set these in `.env`:
+
+```ini
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=you@gmail.com     # the authenticating Gmail account
+SMTP_PASS=<App Password>    # 16-char Google App Password, NOT your login password
+MAIL_FROM=you@gmail.com     # the Gmail account or a verified "Send mail as" alias
+MAIL_TO=you@gmail.com       # where messages land (your real inbox)
+```
+
+- The **App Password** requires 2-Step Verification on the Google account
+  (Google Account → Security → App passwords). A normal password is rejected.
+- Gmail only sends **From** the authenticated address or a verified alias.
+  Setting `MAIL_FROM=no-reply@mentesit.eu` without configuring it under Gmail
+  "Send mail as" makes Gmail rewrite or refuse the From — a common cause of
+  "submitted OK but no mail arrives". Add the alias in Gmail first, or send as
+  the Gmail address.
+- Gmail's send limits (~500/day) are far above a contact form's needs.
+
 ---
 
 ## 3. TLS (terminate in front of `web`)

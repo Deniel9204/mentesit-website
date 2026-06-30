@@ -14,9 +14,9 @@ a Tanács (EU) 2016/679 rendeletével (GDPR).
 ## 1. Az adatkezelő
 
 - **Név:** MentesIT Kft.
-- **Székhely:** <!-- TODO: pontos cím (utca, házszám, irányítószám) -->Fonyód, [pontos cím]
-- **Cégjegyzékszám:** <!-- TODO: cégpapírból -->[cégjegyzékszám]
-- **Adószám:** <!-- TODO: cégpapírból -->[adószám]
+- **Székhely:** 8640 Fonyód, Erdősor utca 14.
+- **Cégjegyzékszám:** <!-- TODO: cégpapírból (14-09-……) -->[cégjegyzékszám]
+- **Adószám:** 28998596-2-14
 - **E-mail:** info@mentesit.eu
 
 ## 2. Milyen adatokat kezelünk, milyen célból és milyen jogalapon?
