@@ -1,0 +1,32 @@
+# Self-host MentesIT / FreeIT: nginx static site + the Go contact endpoint.
+#
+#   1. cp .env.example .env   &&   edit .env (image refs + SMTP)
+#   2. docker compose pull
+#   3. docker compose up -d
+#
+# Terminate TLS with your own reverse proxy (Caddy / Traefik / host nginx) in
+# front of the `web` service on ${WEB_PORT}.
+
+services:
+  web:
+    image: ${WEB_IMAGE:-ghcr.io/deniel9204/mentesit-website-web:latest}
+    restart: unless-stopped
+    depends_on:
+      - contact
+    ports:
+      - "${WEB_PORT:-8080}:80"
+
+  contact:
+    image: ${CONTACT_IMAGE:-ghcr.io/deniel9204/mentesit-website-contact:latest}
+    restart: unless-stopped
+    environment:
+      CONTACT_ADDR: "0.0.0.0:8081"
+      SMTP_HOST: "${SMTP_HOST:?set SMTP_HOST in .env}"
+      SMTP_PORT: "${SMTP_PORT:-587}"
+      SMTP_USER: "${SMTP_USER:-}"
+      SMTP_PASS: "${SMTP_PASS:-}"
+      MAIL_FROM: "${MAIL_FROM:-no-reply@mentesit.eu}"
+      MAIL_TO: "${MAIL_TO:-info@mentesit.eu}"
+      SUCCESS_URL: "${SUCCESS_URL:-https://mentesit.eu/kapcsolat/}"
+    expose:
+      - "8081"

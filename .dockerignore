@@ -1,0 +1,16 @@
+.git
+.github
+.idea
+.serena
+/tmp
+/public
+/resources
+/docs
+node_modules
+*.iml
+*.log
+.DS_Store
+.hugo_build.lock
+# compiled contact-service binaries (the contact image builds from source)
+contact-service/contact
+contact-service/contact-service
