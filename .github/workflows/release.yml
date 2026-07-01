@@ -1,0 +1,100 @@
+name: release
+
+# Automated releases with semantic-release. On every push to main it analyzes
+# the conventional commits since the last tag, and when there's something
+# releasable (feat -> minor, fix/perf/content -> patch, BREAKING CHANGE ->
+# major) it: bumps the version, creates the git tag + GitHub Release with
+# generated notes, and (in the images job) builds & pushes the versioned
+# multi-arch images. build.yml still handles :latest / :sha and PR validation.
+#
+# Self-contained by design: the tag semantic-release pushes with GITHUB_TOKEN
+# would NOT trigger build.yml's `on: push tags` (Actions suppresses that to
+# avoid loops), so the versioned images are built here in the same run.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write      # create tags + releases
+      issues: write        # semantic-release/github
+      pull-requests: write
+    outputs:
+      published: ${{ steps.sr.outputs.new_release_published }}
+      version: ${{ steps.sr.outputs.new_release_version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # full history so semantic-release sees all tags/commits
+      - name: semantic-release
+        id: sr
+        uses: cycjimmy/semantic-release-action@v4  # renovate: datasource=github-tags depName=cycjimmy/semantic-release-action
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  images:
+    needs: release
+    if: needs.release.outputs.published == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: web
+            context: .
+            file: ./Dockerfile
+          - name: contact
+            context: ./contact-service
+            file: ./contact-service/Dockerfile
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v${{ needs.release.outputs.version }}   # build the freshly tagged commit
+
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Compute image name
+        id: img
+        env:
+          REPO: ${{ github.repository }}
+          SUFFIX: ${{ matrix.name }}
+        run: echo "name=$(echo "$REGISTRY/$REPO-$SUFFIX" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ steps.img.outputs.name }}
+          tags: |
+            type=raw,value=${{ needs.release.outputs.version }}
+            type=raw,value=latest
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.file }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=${{ matrix.name }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.name }}
