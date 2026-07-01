@@ -23,19 +23,22 @@ services:
       - ./deploy/htpasswd:/etc/nginx/.htpasswd:ro
 
   goaccess:
-    image: allinurl/goaccess:1.9.4  # renovate: datasource=docker depName=allinurl/goaccess
+    image: allinurl/goaccess:1.10.2  # renovate: datasource=docker depName=allinurl/goaccess
     restart: unless-stopped
     depends_on:
       - web
     # Batch mode (no WebSocket): regenerate the static report every 5 minutes.
     # --anonymize-ip is belt-and-suspenders; the log is already anonymized.
+    # Call `goaccess` bare (on PATH) — the binary path differs between image
+    # versions (/bin in 1.9.x, /usr/bin in 1.10.x). Errors go to `docker logs`.
+    # The report MUST be written to /report (a mounted dir), not elsewhere.
     entrypoint: ["/bin/sh", "-c"]
     command:
       - >
         while :; do
-        /bin/goaccess /var/log/nginx/site.access.log -o /report/index.html
+        goaccess /var/log/nginx/site.access.log -o /report/index.html
         --log-format=COMBINED --anonymize-ip --keep-last=30 --ignore-crawlers
-        --html-report-title=mentesit.eu 2>/dev/null || true;
+        --html-report-title=mentesit.eu || true;
         sleep 300;
         done
     volumes:

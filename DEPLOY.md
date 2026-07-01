@@ -205,6 +205,16 @@ raw `site.access.log` still grows on disk — set up log rotation for the
 retention short. This short retention (not the report-time anonymization) is
 what does the real GDPR work.
 
+**Host bind-mounts (e.g. TrueNAS).** The overlay uses named volumes; if you
+instead bind-mount host paths, note that (1) the GoAccess service must mount the
+report dir at **`/report`** (rw) — GoAccess writes there — while the **web**
+service mounts the *same* dir at `/srv/goaccess` (ro); (2) GoAccess writes the
+report as `root:root 0644`, but the web nginx worker runs as **uid 101**, so the
+report dir needs to be traversable by it — `chmod 0755 <host>/goaccess-report`
+(a `0770` root-owned dir yields 403 at `/stats/`); (3) call `goaccess` bare (the
+binary path moved between image versions). If nothing appears, drop the
+`|| true`/stderr redirect and read `docker logs goaccess`.
+
 **Host-nginx (no Docker) shape.** Run GoAccess from cron against
 `/var/log/nginx/site.access.log` — `goaccess site.access.log -o
 /srv/stats/index.html --log-format=COMBINED --anonymize-ip --keep-last=30
