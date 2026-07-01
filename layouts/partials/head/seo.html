@@ -28,4 +28,5 @@
 {{ partial "schema/organization.html" . }}
 {{- if .IsHome }}{{ partial "schema/website.html" . }}{{ end }}
 {{- if and (eq .Type "services") (eq .Kind "page") }}{{ partial "schema/service.html" . }}{{ end }}
+{{- if .Params.faqs }}{{ partial "schema/faq.html" . }}{{ end }}
 {{- if not .IsHome }}{{ partial "schema/breadcrumb.html" . }}{{ end }}

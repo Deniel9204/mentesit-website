@@ -57,6 +57,12 @@
   weight = 40
 
 [[footer]]
+  identifier = "faq"
+  name = "GYIK"
+  pageRef = "/faq"
+  weight = 45
+
+[[footer]]
   identifier = "privacy"
   name = "Adatkezelés"
   pageRef = "/privacy"

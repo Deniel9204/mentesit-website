@@ -1,13 +1,13 @@
 {{- $c := site.Params.company -}}
 {{- $org := dict
   "@context" "https://schema.org"
-  "@type" "Organization"
+  "@type" (slice "Organization" "ProfessionalService")
   "name" site.Title
   "url" site.BaseURL
   "logo" (absURL "favicon.svg")
   "image" (absURL "og/default.png")
   "description" site.Params.description
-  "areaServed" "HU"
+  "areaServed" (dict "@type" "Country" "name" "Hungary")
   "knowsLanguage" (slice "hu" "en")
 -}}
 {{- with $c -}}
@@ -21,6 +21,10 @@
       "postalCode" .postalCode
       "addressLocality" .locality
       "addressCountry" .countryCode)
+    "geo" (dict
+      "@type" "GeoCoordinates"
+      "latitude" 46.7503
+      "longitude" 17.5344)
     "identifier" (dict
       "@type" "PropertyValue"
       "propertyID" "HU:cégjegyzékszám"
