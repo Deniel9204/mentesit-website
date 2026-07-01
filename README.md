@@ -4,7 +4,6 @@ Bilingual (Hungarian default + English) static marketing site for **MentesIT**
 (HU) / **FreeIT** (EN), built with **Hugo Extended**.
 
 Design direction: *"stdout — the elegant shell"* — a calm, art-directed IDE.
-See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the full plan.
 
 ## Requirements
 
@@ -43,7 +42,7 @@ layouts/           templates + partials (editor chrome, cards, SEO, pipeline)
 assets/scss/       design system (tokens, typography, layout, components)
 assets/js/         progressive-enhancement entry point
 deploy/            deploy.sh + nginx.conf.sample
-docs/              ARCHITECTURE.md (the plan)
+docs/              RELEASING.md (automated release flow)
 ```
 
 ## Adding content
@@ -54,24 +53,20 @@ docs/              ARCHITECTURE.md (the plan)
 - **New case study** — `hugo new --kind references content references/<slug>/index.hu.md`
   (plus the `.en.md`). Add `cover.jpg` to the same folder.
 
-## Milestones
+## SEO & assets
 
-`M0` scaffold ✅ · `M1` chrome & tokens ✅ · `M2` nav & i18n ✅ · `M3` homepage ✅ ·
-`M4` templates & content · `M5` command palette ✅ · `M6` contact form ✅ ·
-`M7` SEO/a11y/perf ✅ · `M8` deploy & launch.
+- Structured data: JSON-LD (Organization/ProfessionalService, WebSite, Service,
+  BreadcrumbList, FAQPage), OG image at `static/og/default.png`, hreflang +
+  canonical, and a clean axe (WCAG 2.1 AA) pass on every page.
+- Fonts are self-hosted and subset (Latin + Latin-Extended) in `static/fonts/`:
+  Inter 400/600, Space Grotesk (variable), JetBrains Mono 400 — regenerate with
+  `fontTools` if you change the subset range.
 
-SEO/a11y: JSON-LD (Organization/WebSite/Service/BreadcrumbList), OG image at
-`static/og/default.png`, hreflang + canonical, and a clean axe (WCAG 2.1 AA)
-pass on every page.
+## Notes
 
-Fonts are self-hosted and subset (Latin + Latin-Extended) in `static/fonts/`:
-Inter 400/600, Space Grotesk (variable), JetBrains Mono 400 — regenerate with
-`fontTools` if you change the subset range.
-
-## Notes / TODO
-
-- Self-hosted webfonts (Space Grotesk, Inter, JetBrains Mono) — done in **M1**.
 - Contact form: self-hosted Go endpoint in `contact-service/` (see its README);
-  deploy via `deploy/mentesit-contact.service`, proxied by nginx at
-  `/api/contact`. `formEndpoint` lives in `params.toml`.
-- Confirm contact email/phone in `config/_default/params.toml` before launch.
+  run via `deploy/mentesit-contact.service` (systemd) or the containerized
+  stack in `docker-compose.yml`. Proxied by nginx at `/api/contact`;
+  `formEndpoint` lives in `params.toml`.
+- Deployment & releases: see [`DEPLOY.md`](DEPLOY.md) and
+  [`docs/RELEASING.md`](docs/RELEASING.md).
