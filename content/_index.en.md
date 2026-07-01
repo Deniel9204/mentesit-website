@@ -5,12 +5,14 @@ translationKey: home
 heroBootLines:
   - "$ freeit --start"
   - "→ custom software ........... ok"
+  - "→ AI & agents .............. ready"
   - "→ operations ............... live"
 heroHeading: "Software you won't need rescuing from."
 heroSub: "From bespoke development to operations — we take the whole of IT off your plate."
 capabilitiesLabel: "// what we build"
 capabilities:
   - "Web applications"
+  - "AI & agent platforms"
   - "System integration"
   - "Process automation"
   - "Internal tools"

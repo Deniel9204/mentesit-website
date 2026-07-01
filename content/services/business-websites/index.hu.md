@@ -3,7 +3,7 @@ title: "Weboldalak"
 description: "Gyors, modern és könnyen karbantartható weboldalak kisvállalkozásoknak."
 translationKey: svc-business-websites
 url: "/szolgaltatasok/weboldalak/"
-weight: 2
+weight: 3
 icon: "globe"
 summary: "Villámgyors, igényes weboldalak, amelyeket öröm használni és üzemeltetni."
 ctaLabel: "Kérek ajánlatot"

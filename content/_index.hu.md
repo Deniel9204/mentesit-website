@@ -5,12 +5,14 @@ translationKey: home
 heroBootLines:
   - "$ mentesit --start"
   - "→ egyedi szoftver ............ kész"
+  - "→ AI & agentek ............... online"
   - "→ üzemeltetés ............... aktív"
 heroHeading: "Szoftver, amit nem kell megmenteni."
 heroSub: "Egyedi fejlesztéstől az üzemeltetésig — a teljes IT-t levesszük a válladról."
 capabilitiesLabel: "// amit építünk"
 capabilities:
   - "Webalkalmazások"
+  - "AI és agent-platformok"
   - "Rendszerintegráció"
   - "Folyamat-automatizálás"
   - "Belső eszközök"
