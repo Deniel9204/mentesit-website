@@ -2,7 +2,7 @@
 title: "Business websites"
 description: "Fast, modern, easy-to-maintain websites for small businesses."
 translationKey: svc-business-websites
-weight: 3
+weight: 4
 icon: "globe"
 summary: "Lightning-fast, polished websites that are a pleasure to use and to run."
 ctaLabel: "Request a quote"

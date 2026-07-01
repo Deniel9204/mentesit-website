@@ -3,7 +3,7 @@ title: "Rendszerüzemeltetés"
 description: "Szerverek, felügyelet és karbantartás — hogy a rendszereid stabilan menjenek."
 translationKey: svc-sysadmin-itops
 url: "/szolgaltatasok/rendszeruzemeltetes/"
-weight: 4
+weight: 5
 icon: "server"
 summary: "Megbízható üzemeltetés és felügyelet, hogy ne neked kelljen aggódnod."
 ctaLabel: "Kérek ajánlatot"

@@ -2,7 +2,7 @@
 title: "Hosting"
 description: "Reliable hosting and domains — in one place with operations."
 translationKey: svc-hosting
-weight: 5
+weight: 6
 icon: "cloud"
 summary: "Fast, secure hosting, in the same hands as development and operations."
 ctaLabel: "Request a quote"

@@ -2,7 +2,7 @@
 title: "Sysadmin & IT operations"
 description: "Servers, monitoring and maintenance — so your systems just keep running."
 translationKey: svc-sysadmin-itops
-weight: 4
+weight: 5
 icon: "server"
 summary: "Dependable operations and monitoring, so you don't have to worry about it."
 ctaLabel: "Request a quote"

@@ -3,7 +3,7 @@ title: "Tárhely"
 description: "Megbízható tárhely és domain — egy helyen az üzemeltetéssel."
 translationKey: svc-hosting
 url: "/szolgaltatasok/tarhely/"
-weight: 5
+weight: 6
 icon: "cloud"
 summary: "Gyors, biztonságos tárhely, a fejlesztéssel és üzemeltetéssel egy kézben."
 ctaLabel: "Kérek ajánlatot"
