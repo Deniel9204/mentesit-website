@@ -5,4 +5,6 @@ translationKey: references
 url: "/referenciak/"
 ---
 
-Válogatás a munkáinkból — egyedi szoftverektől a weboldalakig.
+Válogatás a munkáinkból, kiemelt tapasztalattal a biztosítási szektorban.
+Ügyfeleink egy része titoktartás alatt áll, ezért néhány projektet anonimizálva
+mutatunk be.

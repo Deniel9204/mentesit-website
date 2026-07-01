@@ -3,7 +3,7 @@ title: "Minta projekt"
 description: "Példa esettanulmány — cseréld le egy valódi projektre."
 translationKey: ref-sample
 url: "/referenciak/minta-projekt/"
-draft: false
+draft: true
 client: "Minta Ügyfél Kft."
 sector: "Logisztika"
 year: 2026

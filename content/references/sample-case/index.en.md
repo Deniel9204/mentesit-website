@@ -2,7 +2,7 @@
 title: "Sample project"
 description: "Example case study — replace with a real project."
 translationKey: ref-sample
-draft: false
+draft: true
 client: "Sample Client Ltd."
 sector: "Logistics"
 year: 2026
