@@ -1,0 +1,47 @@
+# Opt-in analytics overlay — self-hosted GoAccess.
+#
+# GoAccess reads the web nginx access log (IPs already anonymized in the log
+# format) and regenerates a static dashboard served same-origin at /stats,
+# behind HTTP basic-auth. No cookies, no JavaScript, no database, zero bytes
+# added to the site. Layer it on top of the base compose file:
+#
+#   1. Create the dashboard login:   htpasswd -c deploy/htpasswd <user>
+#   2. docker compose -f docker-compose.yml -f docker-compose.analytics.yml up -d
+#   3. Visit https://mentesit.eu/stats/
+#
+# See DEPLOY.md → "Analytics (GoAccess)" for the Cloudflare real-IP note and
+# log retention/rotation.
+
+services:
+  web:
+    volumes:
+      # Real access.log dir (a distinct filename avoids the image's stdout symlink).
+      - nginx-logs:/var/log/nginx
+      # The generated dashboard, served read-only by the /stats location.
+      - goaccess-report:/srv/goaccess:ro
+      # Dashboard credentials (create with: htpasswd -c deploy/htpasswd <user>).
+      - ./deploy/htpasswd:/etc/nginx/.htpasswd:ro
+
+  goaccess:
+    image: allinurl/goaccess:1.9.4  # renovate: datasource=docker depName=allinurl/goaccess
+    restart: unless-stopped
+    depends_on:
+      - web
+    # Batch mode (no WebSocket): regenerate the static report every 5 minutes.
+    # --anonymize-ip is belt-and-suspenders; the log is already anonymized.
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - >
+        while :; do
+        /bin/goaccess /var/log/nginx/site.access.log -o /report/index.html
+        --log-format=COMBINED --anonymize-ip --keep-last=30 --ignore-crawlers
+        --html-report-title=mentesit.eu 2>/dev/null || true;
+        sleep 300;
+        done
+    volumes:
+      - nginx-logs:/var/log/nginx:ro
+      - goaccess-report:/report
+
+volumes:
+  nginx-logs:
+  goaccess-report:

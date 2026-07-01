@@ -32,11 +32,21 @@ website visitors, in line with Regulation (EU) 2016/679 (GDPR).
 - **Legal basis:** our **legitimate interest** in protecting the service
   (Art. 6(1)(f)).
 
+### Usage statistics (analytics)
+- **Data:** **aggregate** statistics computed from our web server logs (pages
+  viewed, referrers, browser/OS). The IP address is **anonymized in the log
+  itself** (last block dropped) and logs are kept for a **short time**.
+- **Tool:** our own, self-hosted, **cookie- and JavaScript-free** solution
+  (GoAccess). No third party, no tracking, nothing stored on your device.
+- **Legal basis:** our **legitimate interest** in understanding and improving
+  the service (Art. 6(1)(f)).
+
 ## 3. Retention
 
 - Contact messages are kept until the matter is closed, and no longer than
   **12 months**, unless law requires longer retention.
 - Technical (IP) data is kept only as long as needed for spam filtering.
+- **Anonymized** web server logs (for statistics) are kept for a short time.
 
 ## 4. Recipients and processors
 
@@ -56,7 +66,9 @@ advertising service.
 ## 5. Cookies
 
 This website uses **no** tracking or marketing cookies. The spam protection
-(ALTCHA) runs locally in your browser, with no third party involved.
+(ALTCHA) runs locally in your browser, with no third party involved. Usage
+statistics are derived solely from **anonymized** server logs — **no cookies,
+no JavaScript** — so no consent banner is required.
 
 ## 6. Your rights
 

@@ -170,6 +170,50 @@ and re-run `up -d`. Old images stay in GHCR, so rollback is just a tag change.
 
 ---
 
+## 6. Analytics (GoAccess) — optional
+
+Self-hosted, **cookieless, no-JavaScript, no-database** web analytics. GoAccess
+reads the nginx access log (IPs are anonymized *in the log format*, so raw logs
+never store a full IP) and renders a static dashboard served **same-origin at
+`/stats/`** behind HTTP basic-auth. Zero bytes are added to the site, so no
+consent banner is needed (already reflected in the privacy policy).
+
+```bash
+# 1. create the dashboard login (Apache htpasswd tools, or: docker run httpd)
+htpasswd -c deploy/htpasswd <username>        # gitignored; never commit it
+
+# 2. run with the analytics overlay
+docker compose -f docker-compose.yml -f docker-compose.analytics.yml up -d
+
+# 3. browse (behind your TLS proxy)
+open https://mentesit.eu/stats/               # prompts for the login above
+```
+
+The `goaccess` container regenerates `/stats/index.html` every 5 minutes from
+`site.access.log`. Reload the page for fresh numbers (batch mode — no WebSocket).
+
+**Cloudflare / real client IP.** The anonymized log shows *visitors* only if
+nginx sees the real client IP. `nginx.docker.conf` trusts private-range proxies
+and reads `X-Forwarded-For`. If the site is **Cloudflare-proxied** (orange
+cloud), either keep DNS-only (grey cloud) or add Cloudflare's IP ranges to
+`set_real_ip_from` and use `real_ip_header CF-Connecting-IP` — otherwise every
+hit collapses to a Cloudflare edge IP.
+
+**Retention / rotation.** `--keep-last=30` caps the report to 30 days, but the
+raw `site.access.log` still grows on disk — set up log rotation for the
+`nginx-logs` volume (e.g. a logrotate sidecar or a periodic truncate) to keep
+retention short. This short retention (not the report-time anonymization) is
+what does the real GDPR work.
+
+**Host-nginx (no Docker) shape.** Run GoAccess from cron against
+`/var/log/nginx/site.access.log` — `goaccess site.access.log -o
+/srv/stats/index.html --log-format=COMBINED --anonymize-ip --keep-last=30
+--ignore-crawlers` — and serve `/srv/stats` from an `auth_basic` location in
+`deploy/nginx.conf.sample` (same `map`/`log_format`/`set_real_ip_from` shown in
+`nginx.docker.conf`).
+
+---
+
 ## Alternative: no Docker (rsync to a host nginx)
 
 If you'd rather not use containers, `deploy/deploy.sh` builds with a local Hugo

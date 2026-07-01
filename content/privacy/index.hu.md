@@ -34,11 +34,22 @@ a Tanács (EU) 2016/679 rendeletével (GDPR).
 - **Jogalap:** a szolgáltatás védelméhez fűződő **jogos érdekünk**
   (6. cikk (1) f)).
 
+### Látogatottsági statisztika (analitika)
+- **Adatok:** a webszerver naplóiból számított **összesített** statisztika
+  (megtekintett oldalak, hivatkozó oldalak, böngésző/OS). Az IP-címet **már a
+  naplóban anonimizáljuk** (az utolsó blokk levágásával), és a naplókat **rövid
+  ideig** őrizzük.
+- **Eszköz:** saját, helyben futó, **süti- és JavaScript-mentes** megoldás
+  (GoAccess). Nincs harmadik fél, nincs nyomkövetés, nincs eszközön tárolt adat.
+- **Jogalap:** a szolgáltatás megértéséhez és fejlesztéséhez fűződő **jogos
+  érdekünk** (6. cikk (1) f)).
+
 ## 3. Megőrzési idő
 
 - A kapcsolatfelvételi üzeneteket az ügy lezárásáig, de legfeljebb
   **12 hónapig** őrizzük, kivéve, ha jogszabály hosszabb megőrzést ír elő.
 - A technikai (IP) adatokat csak a spamszűréshez szükséges rövid ideig tároljuk.
+- A webszerver **anonimizált** naplóit (statisztikához) rövid ideig őrizzük.
 
 ## 4. Címzettek és adatfeldolgozók
 
@@ -60,7 +71,9 @@ származó analitikai vagy hirdetési szolgáltatást.
 ## 5. Sütik (cookies)
 
 A weboldal **nem használ** nyomkövető vagy marketing sütiket. A spamvédelem
-(ALTCHA) helyben, a böngésződben fut, külső szolgáltató bevonása nélkül.
+(ALTCHA) helyben, a böngésződben fut, külső szolgáltató bevonása nélkül. A
+látogatottsági statisztika kizárólag a szerver **anonimizált** naplóiból
+készül — **sütik és JavaScript nélkül**, így nincs szükség hozzájárulási sávra.
 
 ## 6. A jogaid
 

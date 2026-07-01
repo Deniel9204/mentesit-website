@@ -10,6 +10,8 @@ hugo_stats.json
 
 # Local secrets (docker-compose)
 .env
+# Analytics dashboard credentials (create with: htpasswd -c deploy/htpasswd <user>)
+deploy/htpasswd
 
 # Node (only if tooling is added later)
 node_modules/
