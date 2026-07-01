@@ -218,9 +218,10 @@ binary path moved between image versions). If nothing appears, drop the
 **Host-nginx (no Docker) shape.** Run GoAccess from cron against
 `/var/log/nginx/site.access.log` — `goaccess site.access.log -o
 /srv/stats/index.html --log-format=COMBINED --anonymize-ip --keep-last=30
---ignore-crawlers` — and serve `/srv/stats` from an `auth_basic` location in
-`deploy/nginx.conf.sample` (same `map`/`log_format`/`set_real_ip_from` shown in
-`nginx.docker.conf`).
+--ignore-crawlers` — and serve `/srv/stats` from an `auth_basic`
+`location ^~ /stats/` in `deploy/nginx.conf.sample` (the `^~` is required so the
+prefix beats the `\.(html|xml)$` regex; same `map`/`log_format`/`set_real_ip_from`
+shown in `nginx.docker.conf`).
 
 ---
 
