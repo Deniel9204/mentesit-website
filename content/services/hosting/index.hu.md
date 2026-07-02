@@ -36,6 +36,6 @@ Először megnézzük, mi fut most és mekkora terhelést kell kiszolgálni, maj
 
 ## Miért mi
 
-Aggresszívan self-hosted szemléletben dolgozunk: a rendszereidet futtathatjuk saját, európai infrastruktúrán, ahol pontosan tudni lehet, hol vannak az adataid és ki fér hozzájuk. Ez nem ideológia, hanem gyakorlati előny — kiszámítható költség, tiszta adatvédelem, és semmi függés egy külső platform árazásától vagy hangulatától. Ott is otthon vagyunk, ahol nagyobb a tét: építettünk és üzemeltettünk komoly forgalmú rendszereket (pl. biztosítási rendszerek), 20+ alkalmazásból álló platformokat és önállóan hosztolt tudásbázist. Ugyanezt a figyelmet kapja egy egyoldalas céges weboldal is.
+Adatszuverén szemléletben dolgozunk: a rendszereidet megbízható magyar partnereinkkel, magyarországi infrastruktúrán futtathatjuk, ahol pontosan tudni lehet, hol vannak az adataid és ki fér hozzájuk. Ez nem ideológia, hanem gyakorlati előny — kiszámítható költség, tiszta adatvédelem, és semmi függés egy külső platform árazásától vagy hangulatától. Ott is otthon vagyunk, ahol nagyobb a tét: építettünk és üzemeltettünk komoly forgalmú rendszereket (pl. biztosítási rendszerek), 20+ alkalmazásból álló platformokat és privát tudásbázist. Ugyanezt a figyelmet kapja egy egyoldalas céges weboldal is.
 
 Ha van egy oldalad vagy alkalmazásod, aminek stabil, jól karbantartott otthonra van szüksége, írd meg röviden, mi fut most — és összerakunk rá egy őszinte, méretre szabott ajánlatot.

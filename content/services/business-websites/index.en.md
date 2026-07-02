@@ -22,7 +22,7 @@ Most of our website work falls into a few well-defined shapes:
 - **Brochure sites** for small businesses: who you are, what you offer, references, contact — clear structure, real content, no filler.
 - **Landing pages** for a specific campaign, product or service, built around a single clear goal.
 - **Multilingual sites**, the way this very site runs in Hungarian and English.
-- **Contact forms** with spam filtering and processing on our own server — not in a third party's hands.
+- **Contact forms** with spam filtering and processing on a Hungarian server — not in a third party's hands.
 
 If you later need an internal tool or a web app, the same team that built the site carries it forward.
 
@@ -40,6 +40,6 @@ We don't vanish after launch either. Hosting, domain, email and backups can all 
 
 ## Why us
 
-The page you're reading is our own reference — built with exactly the static, self-hosted technology we'd recommend to you. The privacy-first, self-hosted approach isn't a marketing line for us: we've built larger systems the same way (e.g. insurance-sector systems, a self-hosted knowledge base) where the sensitivity of the data left no room for compromise.
+The page you're reading is our own reference — built with exactly the static, privacy-first technology we'd recommend to you. The privacy-first, data-stays-in-Hungary approach isn't a marketing line for us: we've built larger systems the same way (e.g. insurance-sector systems, a private knowledge base) where the sensitivity of the data left no room for compromise.
 
 We won't promise anything "revolutionary." We promise your site will be fast, stay maintainable, and never become something you worry about. If you have a business website in mind, let's start with a short call — then we'll give you an honest, itemized quote.

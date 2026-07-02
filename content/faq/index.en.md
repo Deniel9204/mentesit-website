@@ -1,6 +1,6 @@
 ---
 title: "Frequently asked questions"
-description: "Answers to the most common questions — team, source code, confidentiality, pricing, self-hosted AI and support."
+description: "Answers to the most common questions — team, source code, confidentiality, pricing, private AI and support."
 translationKey: faq
 faqs:
   - q: "Are you a small team?"
@@ -12,9 +12,9 @@ faqs:
   - q: "How do you price?"
     a: "We give a project-based, transparent quote after a free first call — fixed scope, no hidden fees. We reply to enquiries within 24 hours."
   - q: "Can the AI really run on our own infrastructure?"
-    a: "Yes. The models run on your own (or our EU) infrastructure, and your data never leaves the system — GDPR-clean, with no third-party cloud."
+    a: "Yes. The models run on your own, or our Hungarian partners', infrastructure, and your data never leaves the system — GDPR-clean, with no third-party cloud."
   - q: "What technologies do you work with?"
-    a: "We pick the tool for the job: for example Angular, Java, Go, Rust, Svelte, PostgreSQL and MongoDB, plus static web (Hugo) and self-hosted infrastructure."
+    a: "We pick the tool for the job: for example Angular, Java, Go, Rust, Svelte, PostgreSQL and MongoDB, plus static web (Hugo) and infrastructure we run with Hungarian partners."
   - q: "What happens after handover?"
     a: "We don't leave you on your own: we operate, maintain and keep improving the system — one partner for the whole stack, from development to hosting."
 ---

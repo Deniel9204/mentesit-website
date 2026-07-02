@@ -31,10 +31,10 @@ Small and mid-sized businesses tired of having hosting, domain and email spread 
 
 ## How we work
 
-We start by looking at what runs today and the load it needs to handle, then size it sensibly — we won't sell you a bigger plan than you need. We handle the migration ourselves, with minimal downtime and at an agreed time. The relationship continues afterwards: monitoring, updates and backup checks are our job, not yours. One partner owns the whole stack, from the domain to the running code.
+We start by looking at what runs today and the load it needs to handle, then size it sensibly — we won't sell you a bigger plan than you need. We handle the migration ourselves, with minimal downtime and at an agreed time. The relationship continues afterwards: monitoring, updates and backup checks are our job, not yours. One partner looks after the whole stack, from the domain to the running code.
 
 ## Why us
 
-We work with an aggressively self-hosted mindset: your systems can run on our own European infrastructure, where it's clear exactly where your data lives and who can reach it. That's not ideology, it's a practical edge — predictable cost, clean privacy, and no dependence on an external platform's pricing or mood. We're also comfortable where the stakes are higher: we've built and operated high-traffic systems (e.g. insurance-sector platforms), platforms spanning 20+ applications, and a self-hosted knowledge base. A single-page company site gets the same care.
+We work with a data-sovereignty mindset: your systems can run on Hungarian infrastructure we operate with trusted local partners, where it's clear exactly where your data lives and who can reach it. That's not ideology, it's a practical edge — predictable cost, clean privacy, and no dependence on an external platform's pricing or mood. We're also comfortable where the stakes are higher: we've built and operated high-traffic systems (e.g. insurance-sector platforms), platforms spanning 20+ applications, and a private knowledge base. A single-page company site gets the same care.
 
 If you have a site or an application that needs a stable, well-maintained home, tell us briefly what runs today — and we'll put together an honest, right-sized quote for it.

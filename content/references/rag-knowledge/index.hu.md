@@ -1,6 +1,6 @@
 ---
 title: "Privát RAG tudásrendszer"
-description: "Több forrásból építkező, saját infrastruktúrán futó RAG tudásrendszer — Rust és Svelte alapokon."
+description: "Több forrásból építkező, privát (on-premise) RAG tudásrendszer — Rust és Svelte alapokon."
 translationKey: ref-rag
 url: "/referenciak/rag-tudasrendszer/"
 client: "Belső tudásrendszer"
@@ -14,7 +14,7 @@ tech:
   - "Rust"
   - "Svelte"
   - "RAG"
-summary: "Több forrásból építkező, saját infrastruktúrán futó RAG tudásrendszer — Rust és Svelte alapokon."
+summary: "Több forrásból építkező, privát (on-premise) RAG tudásrendszer — Rust és Svelte alapokon."
 metrics:
   - label: "Ingesztálási források"
     value: "több"

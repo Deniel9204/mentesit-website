@@ -27,7 +27,7 @@ website visitors, in line with Regulation (EU) 2016/679 (GDPR).
 
 ### Technical data (spam protection)
 - **Data:** IP address and request time — held briefly, in memory only.
-- **Purpose:** abuse and spam filtering (rate limiting and our self-hosted
+- **Purpose:** abuse and spam filtering (rate limiting and our own
   ALTCHA check).
 - **Legal basis:** our **legitimate interest** in protecting the service
   (Art. 6(1)(f)).
@@ -36,7 +36,7 @@ website visitors, in line with Regulation (EU) 2016/679 (GDPR).
 - **Data:** **aggregate** statistics computed from our web server logs (pages
   viewed, referrers, browser/OS). The IP address is **anonymized in the log
   itself** (last block dropped) and logs are kept for a **short time**.
-- **Tool:** our own, self-hosted, **cookie- and JavaScript-free** solution
+- **Tool:** our own, **cookie- and JavaScript-free** solution
   (GoAccess). No third party, no tracking, nothing stored on your device.
 - **Legal basis:** our **legitimate interest** in understanding and improving
   the service (Art. 6(1)(f)).
@@ -60,7 +60,7 @@ Both operate (also) in the United States, so data may be transferred to a third
 country — under the safeguards of the EU–US Data Privacy Framework and/or the
 European Commission's Standard Contractual Clauses (SCCs).
 
-The website runs on **our own hosting**. We use **no** third-party analytics or
+The website runs on **Hungarian servers**, operated with our trusted local partners. We use **no** third-party analytics or
 advertising service.
 
 ## 5. Cookies

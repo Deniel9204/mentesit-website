@@ -30,10 +30,10 @@ Call us when you're facing a decision and don't want to move blind. We help shap
 
 Briefly: honestly. First we understand the business goal, then we talk technology. After the review you get a readable report — not eighty pages of generalities, but concrete findings, risks, and a realistic roadmap. We don't chain you to us: if you take the next step with another team or in-house, the documentation is still yours and still usable.
 
-We're vendor-independent. We won't push a particular platform or cloud just because it's convenient for us. Where it makes sense, we work against lock-in and needless cloud spend, and favour self-hosted, data-sovereign solutions — where your data stays yours.
+We're vendor-independent. We won't push a particular platform or cloud just because it's convenient for us. Where it makes sense, we work against lock-in and needless cloud spend, and favour data-sovereign solutions kept in the EU — where your data stays yours.
 
 ## Why us
 
-Because we've built and operated real, production systems: a full online insurance-comparison platform (Angular/Java, Mongo and Postgres, 20+ apps), a self-hosted RAG knowledge base (Rust/Svelte), and mobile, web and backend claims-handling systems, for example in the insurance sector. We know where an architecture decision hurts two years later, because in several cases we lived with the consequences ourselves.
+Because we've built and operated real, production systems: a full online insurance-comparison platform (Angular/Java, Mongo and Postgres, 20+ apps), a private RAG knowledge base (Rust/Svelte), and mobile, web and backend claims-handling systems, for example in the insurance sector. We know where an architecture decision hurts two years later, because in several cases we lived with the consequences ourselves.
 
 If you have a specific question, a suspicious quote, or a system you're not sure about — let's start with a short, no-pressure call, and from there we'll see whether a deeper review is even needed.

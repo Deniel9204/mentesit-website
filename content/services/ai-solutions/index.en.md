@@ -10,7 +10,7 @@ benefits:
   - "Agents and agentic workflows"
   - "RAG over your own documents"
   - "LLM integration into existing systems"
-  - "Self-hosted, GDPR-clean"
+  - "On your infrastructure, GDPR-clean"
 ---
 
 We don't add AI for its own sake — we add it to do one specific, repetitive task faster and more accurately. The models run on your own server or VPS, so your data never leaves for a third-party cloud. That's the difference from most SaaS-based AI tools, and it's exactly what keeps the solution GDPR-clean.
@@ -33,6 +33,6 @@ We start with a short assessment: where you lose the most time, and whether the 
 
 ## Why us
 
-We don't promise AGI — we promise concrete, verifiable results for your everyday processes. We've built and operated large, complex systems in production, including a self-hosted RAG knowledge system and a platform of 20+ applications, so we treat AI as maintainable, integrated software rather than a demo. The self-hosted, privacy-clean approach isn't a marketing line here — it's the default.
+We don't promise AGI — we promise concrete, verifiable results for your everyday processes. We've built and operated large, complex systems in production, including a private RAG knowledge system and a platform of 20+ applications, so we treat AI as maintainable, integrated software rather than a demo. The privacy-first, data-stays-with-you approach isn't a marketing line here — it's the default.
 
 If you have a process that feels heavy on manual work or repetition, describe it in a few sentences. On the first call we'll tell you honestly whether AI is the right tool for it, and if so, how big the job is.

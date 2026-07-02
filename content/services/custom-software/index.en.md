@@ -38,7 +38,7 @@ You don't need a finished spec to start. Tell us where today's process breaks do
 
 ## Why us
 
-We work self-hosted and privacy-first by default. Where it makes sense, your application and your data run on your own infrastructure (or ours, in the EU) — not scattered across foreign cloud providers. That's an advantage during development too: **process automation** and integrations stay transparent, there's no vendor lock-in, and you always know where your data lives.
+We work privacy-first by default. Where it makes sense, your application and your data run on your own infrastructure, or on Hungarian infrastructure we operate with trusted local partners — not scattered across foreign cloud providers. That's an advantage during development too: **process automation** and integrations stay transparent, there's no vendor lock-in, and you always know where your data lives.
 
 We don't promise magic or buzzwords — we promise solid, working software, with long-term maintenance and evolution.
 

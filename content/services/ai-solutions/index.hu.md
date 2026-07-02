@@ -11,7 +11,7 @@ benefits:
   - "Ügynökök és agentikus munkafolyamatok"
   - "RAG a saját dokumentumaid alapján"
   - "LLM-integráció meglévő rendszerekbe"
-  - "Saját szerveren, GDPR-tisztán"
+  - "A te infrastruktúrádon, GDPR-tisztán"
 ---
 
 Az AI-t nem önmagáért építjük be, hanem azért, hogy egy konkrét, ismétlődő feladatot gyorsabban és pontosabban végezz el. A modellek a saját szervereden vagy VPS-eden futnak, így az adataid nem kerülnek ki harmadik fél felhőjébe — ez a különbség a legtöbb SaaS-alapú AI-eszközhöz képest, és pontosan ez teszi GDPR-tisztává a megoldást.
@@ -34,6 +34,6 @@ Egy rövid felméréssel kezdünk: hol veszíted a legtöbb időt, és mérhető
 
 ## Miért mi
 
-Nem AGI-t ígérünk, hanem konkrét, ellenőrizhető eredményt a hétköznapi folyamataidra. Nagy, összetett rendszereket építettünk és üzemeltettünk éles környezetben — többek között saját üzemeltetésű RAG-tudásrendszert és 20+ alkalmazásból álló platformot —, így az AI-t nem demóként, hanem karbantartható, integrált szoftverként kezeljük. Az önállóan üzemeltetett, adatvédelmi szempontból tiszta megközelítés nálunk nem marketingszlogen, hanem alapértelmezés.
+Nem AGI-t ígérünk, hanem konkrét, ellenőrizhető eredményt a hétköznapi folyamataidra. Nagy, összetett rendszereket építettünk és üzemeltettünk éles környezetben — többek között privát RAG-tudásrendszert és 20+ alkalmazásból álló platformot —, így az AI-t nem demóként, hanem karbantartható, integrált szoftverként kezeljük. A privacy-first, adatvédelmi szempontból tiszta megközelítés nálunk nem marketingszlogen, hanem alapértelmezés.
 
 Ha van egy folyamatod, amiről úgy érzed, sok kézi munkát vagy sok ismétlést tartalmaz, írd le pár mondatban — az első beszélgetésen őszintén megmondjuk, hogy AI a helyes eszköz-e rá, és ha igen, mekkora munka.

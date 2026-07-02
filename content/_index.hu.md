@@ -26,8 +26,8 @@ proofAfter:
 proofMetrics:
   - label: "Válaszidő"
     value: "24h"
-  - label: "Saját infrastruktúra"
-    value: "100%"
+  - label: "Adataid"
+    value: "Magyarországon"
   - label: "Egy kézben"
     value: "fejlesztés → üzemeltetés"
 process:

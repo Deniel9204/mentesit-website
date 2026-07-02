@@ -39,7 +39,7 @@ a Tanács (EU) 2016/679 rendeletével (GDPR).
   (megtekintett oldalak, hivatkozó oldalak, böngésző/OS). Az IP-címet **már a
   naplóban anonimizáljuk** (az utolsó blokk levágásával), és a naplókat **rövid
   ideig** őrizzük.
-- **Eszköz:** saját, helyben futó, **süti- és JavaScript-mentes** megoldás
+- **Eszköz:** saját üzemeltetésű, **süti- és JavaScript-mentes** megoldás
   (GoAccess). Nincs harmadik fél, nincs nyomkövetés, nincs eszközön tárolt adat.
 - **Jogalap:** a szolgáltatás megértéséhez és fejlesztéséhez fűződő **jogos
   érdekünk** (6. cikk (1) f)).
@@ -65,7 +65,7 @@ továbbítása harmadik országba történhet — az EU–USA Adatvédelmi Keret
 Privacy Framework), illetve az Európai Bizottság általános szerződéses
 feltételei (SCC) szerinti garanciák mellett.
 
-A weboldalt **saját tárhelyen** üzemeltetjük. **Nem** használunk harmadik féltől
+A weboldalt **magyarországi szervereken**, megbízható hazai partnereinkkel üzemeltetjük. **Nem** használunk harmadik féltől
 származó analitikai vagy hirdetési szolgáltatást.
 
 ## 5. Sütik (cookies)

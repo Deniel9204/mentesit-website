@@ -1,6 +1,6 @@
 ---
 title: "Private RAG knowledge system"
-description: "A self-hosted RAG knowledge system ingesting multiple sources — built with Rust and Svelte."
+description: "A private, on-prem RAG knowledge system ingesting multiple sources — built with Rust and Svelte."
 translationKey: ref-rag
 client: "Internal knowledge base"
 sector: "Artificial intelligence"
@@ -13,7 +13,7 @@ tech:
   - "Rust"
   - "Svelte"
   - "RAG"
-summary: "A self-hosted RAG knowledge system ingesting multiple sources — built with Rust and Svelte."
+summary: "A private, on-prem RAG knowledge system ingesting multiple sources — built with Rust and Svelte."
 metrics:
   - label: "Ingestion sources"
     value: "multiple"

@@ -26,8 +26,8 @@ proofAfter:
 proofMetrics:
   - label: "Response time"
     value: "24h"
-  - label: "Own infrastructure"
-    value: "100%"
+  - label: "Your data"
+    value: "in Hungary"
   - label: "One team"
     value: "build → operate"
 process:

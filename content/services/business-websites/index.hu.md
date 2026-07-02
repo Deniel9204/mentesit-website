@@ -23,7 +23,7 @@ A tipikus weboldal készítés nálunk néhány jól körülhatárolt formában 
 - **Bemutatkozó oldal** kisvállalkozásoknak: cég, szolgáltatások, referenciák, elérhetőség — tiszta szerkezettel, valódi tartalommal.
 - **Landing oldal** egy konkrét kampányhoz, termékhez vagy szolgáltatáshoz, egyetlen világos céllal.
 - **Több nyelvű oldalak**, ahogyan ez a sajátunk is magyarul és angolul fut.
-- **Kapcsolatfelvétel és űrlapok** spamszűréssel, saját szerveren futó feldolgozással — nem harmadik fél kezén.
+- **Kapcsolatfelvétel és űrlapok** spamszűréssel, magyarországi szerveren futó feldolgozással — nem harmadik fél kezén.
 
 Ha időközben belső eszközre vagy webalkalmazásra van szükséged, ugyanaz a csapat viszi tovább, amelyik a weboldalt is építette.
 
@@ -41,6 +41,6 @@ Nem tűnünk el az élesítés után sem: a tárhely, a domain, az e-mail és a 
 
 ## Miért minket
 
-Ez az oldal, amit épp olvasol, a saját referenciánk — pontosan azzal a statikus, önálló üzemeltetésű technológiával készült, amit neked is ajánlunk. A privacy-first, önállóan üzemeltetett megközelítés nálunk nem marketingszöveg: nagyobb rendszereket is építettünk így (pl. biztosítási rendszerek, saját üzemeltetésű tudásbázis), ahol az adat érzékenysége nem engedett meg kompromisszumot.
+Ez az oldal, amit épp olvasol, a saját referenciánk — pontosan azzal a statikus, privacy-first technológiával készült, amit neked is ajánlunk. A privacy-first, Magyarországon tartott adat megközelítés nálunk nem marketingszöveg: nagyobb rendszereket is építettünk így (pl. biztosítási rendszerek, privát tudásbázis), ahol az adat érzékenysége nem engedett meg kompromisszumot.
 
 Nem ígérünk „forradalmi” dolgokat. Azt ígérjük, hogy az oldalad gyors lesz, karbantartható marad, és nem kell miatta aggódnod. Ha van egy elképzelésed egy kisvállalkozás weboldaláról, kezdjük egy rövid beszélgetéssel — utána adunk egy őszinte, tételes ajánlatot.

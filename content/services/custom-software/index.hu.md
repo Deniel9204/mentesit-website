@@ -39,7 +39,7 @@ Az induláshoz nem kell kész specifikáció. Elég, ha elmondod, hol akad meg a
 
 ## Miért mi
 
-Aggresszíven self-hosted és adatvédelem-központú szemlélettel dolgozunk. Ahol értelme van, az alkalmazásod és az adataid a saját infrastruktúrádon (vagy a mienkön, Magyarországon) futnak — nem szórjuk szét külföldi felhőszolgáltatók között. Ez fejlesztéskor is előny: a **folyamat-automatizálás** és az integrációk átláthatók maradnak, nincs vendor lock-in, és pontosan tudod, hol vannak az adataid.
+Adatvédelem-központú szemlélettel dolgozunk. Ahol értelme van, az alkalmazásod és az adataid a saját infrastruktúrádon, vagy megbízható magyar partnereinkkel üzemeltetett magyarországi infrastruktúrán futnak — nem szórjuk szét külföldi felhőszolgáltatók között. Ez fejlesztéskor is előny: a **folyamat-automatizálás** és az integrációk átláthatók maradnak, nincs vendor lock-in, és pontosan tudod, hol vannak az adataid.
 
 Nem ígérünk varázslatot és divatszavakat — kőkemény, működő szoftvert igen, hosszú távú karbantartással és továbbfejlesztéssel.
 

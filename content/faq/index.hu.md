@@ -1,6 +1,6 @@
 ---
 title: "Gyakori kérdések"
-description: "Válaszok a leggyakoribb kérdésekre — csapat, forráskód, titoktartás, árazás, self-hosted AI és támogatás."
+description: "Válaszok a leggyakoribb kérdésekre — csapat, forráskód, titoktartás, árazás, privát AI és támogatás."
 translationKey: faq
 url: "/gyik/"
 faqs:
@@ -13,9 +13,9 @@ faqs:
   - q: "Hogyan áraztok?"
     a: "Projektalapú, átlátható ajánlatot adunk egy ingyenes első beszélgetés után — fix kerettel, rejtett költségek nélkül. A megkeresésekre 24 órán belül válaszolunk."
   - q: "Tényleg a saját infrastruktúránkon futhat az AI?"
-    a: "Igen. A modellek a saját (vagy a mi, magyarországi) infrastruktúrádon futnak, az adataid nem hagyják el a rendszert — GDPR-tisztán, harmadik fél felhője nélkül."
+    a: "Igen. A modellek a saját, vagy magyar partnereink infrastruktúráján futnak, az adataid nem hagyják el a rendszert — GDPR-tisztán, harmadik fél felhője nélkül."
   - q: "Milyen technológiákkal dolgoztok?"
-    a: "A feladathoz választjuk az eszközt: például Angular, Java, Go, Rust, Svelte, PostgreSQL és MongoDB, valamint statikus web (Hugo) és self-hosted infrastruktúra."
+    a: "A feladathoz választjuk az eszközt: például Angular, Java, Go, Rust, Svelte, PostgreSQL és MongoDB, valamint statikus web (Hugo) és magyar partnereinkkel üzemeltetett infrastruktúra."
   - q: "Mi van a projekt átadása után?"
     a: "Nem hagyunk magadra: üzemeltetünk, karbantartunk és továbbfejlesztünk — egy partner a teljes stackhez, a fejlesztéstől a tárhelyig."
 ---

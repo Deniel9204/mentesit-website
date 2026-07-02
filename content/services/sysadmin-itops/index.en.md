@@ -17,7 +17,7 @@ Good IT operations is the kind you never notice: servers run, backups exist, upd
 
 ## What server operations covers
 
-We take over your existing servers and systems, or set them up from scratch — on bare metal, virtual servers, or self-hosted cloud. Day-to-day operations means concrete things here:
+We take over your existing servers and systems, or set them up from scratch — on bare metal, virtual servers, or a private cloud. Day-to-day operations means concrete things here:
 
 - **Monitoring and oversight** — we continuously watch services, load, disk and certificates, with alerting that fires before your users notice a problem.
 - **Backups and recovery** — we don't just back up, we regularly restore into a test environment, because a backup is only worth something once you've proven it restores.
@@ -41,6 +41,6 @@ We've built and run large, continuously-running systems in production (e.g. insu
 
 ## Why us
 
-We work with an aggressively self-hosted mindset: your monitoring, logs and backups can stay where you control them, not inside a third party's black box. That's a cleaner position for data privacy, and it doesn't tie you to a platform's pricing. We're a small team with a real person on the other end — you're writing to someone who knows your system, not to a ticket factory.
+We work with a data-sovereignty mindset: your monitoring, logs and backups can stay where you control them, not inside a third party's black box. That's a cleaner position for data privacy, and it doesn't tie you to a platform's pricing. We're a small team with a real person on the other end — you're writing to someone who knows your system, not to a ticket factory.
 
 If there's a server or system you'd like a calmer backstop behind, send us a few lines about what runs today — on the first call we can already tell you concretely where you stand and what the next step is.
